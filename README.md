@@ -8,11 +8,24 @@ in this, I will continue to update this document along with making a python wrap
 if you like this you can support me with following my socials or joining my discord.
 
 
+
+### Index
+
+[Public API Contents](https://github.com/im-kuro/TradingveiwAPI/tree/main#public-api-overveiw-apiv1)
+- [Scanner Endpoints](https://github.com/im-kuro/TradingveiwAPI/tree/main#scanner-endpoints)
+- [API Endpoints](https://github.com/im-kuro/TradingveiwAPI/tree/main#api-endpoints)
+- [News Endpoints](https://github.com/im-kuro/TradingveiwAPI/tree/main#news-endpoints)
+
+[Private API Contents](https://github.com/im-kuro/TradingveiwAPI/tree/main#private-api-overveiw-apiv1)
+- None currently
+
+
+
 ### Public API overveiw /api/v1
 
 #### Endpoints 
  
-[x] - https://scanner.tradingview.com/
+https://scanner.tradingview.com/
 ## Scanner Endpoints
 - POST /global/scan
 - POST /coin/scan
@@ -20,7 +33,7 @@ if you like this you can support me with following my socials or joining my disc
 
 
 
-[x] - https://www.tradingview.com/api/v1/
+https://www.tradingview.com/api/v1/
 ## API Endpoints
 - GET /study-templates
 - GET /symbols_list/custom/
@@ -29,7 +42,7 @@ if you like this you can support me with following my socials or joining my disc
 
 
 
-[x] - https://news-headlines.tradingview.com/v2/
+https://news-headlines.tradingview.com/v2/
 ## News Endpoints
 - GET /headlines
 
