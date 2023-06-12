@@ -1,10 +1,10 @@
 
 
 # Here are all the public endpoint with limited access to data and functionality.
-### (most of this was written by chatGPT lmao so if you see a issue lmk)
+(most of this was written by chatGPT lmao so if you see a issue lmk)
 
 
-[x] - https://scanner.tradingview.com/
+https://scanner.tradingview.com/
 ## Scanner Endpoints
 - POST /global/scan
 - POST /coin/scan
@@ -12,7 +12,7 @@
 
 
 
-[x] - https://www.tradingview.com/api/v1/
+https://www.tradingview.com/api/v1/
 ## API Endpoints
 - GET /study-templates
 - GET /symbols_list/custom/
@@ -20,8 +20,7 @@
 - GET /symbols_list/colored
 - GET /brokers/trading_panel
 
-
-[x] - https://news-headlines.tradingview.com/v2/
+https://news-headlines.tradingview.com/v2/
 ## News Endpoints
 - GET /headlines
 -
@@ -390,6 +389,7 @@ The response will contain an array of headline items. Each item has the followin
 			"permission": "preview",
 			"storyPath": "/news/benzinga:83599eeec094b:0-bitcoin-conference-2024-swapping-miami-heat-for-nashville-beats/"
 		}
+   ]
 }
 ```
 Please note that the provided JSON response represents a single headline item. The actual response may contain multiple items in the `items` array.
@@ -565,9 +565,7 @@ The response will contain an array of objects, each representing a broker's trad
         ]
       },
       "site": {
-        "
-
-link": "https://www.tradestation.com/?utm_source=tradingview&utm_medium=referral&utm_content=Broker+Page+-+Contacts",
+        "link": "https://www.tradestation.com/?utm_source=tradingview&utm_medium=referral&utm_content=Broker+Page+-+Contacts",
         "text": "www.tradestation.com"
       },
       "address": "8050 SW 10th Street,  Plantation, FL 33324, US",
