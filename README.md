@@ -8,9 +8,9 @@ This repository provides unofficial documentation for the TradingView API. It se
 ## Table of Contents
 
 - [Public API Overview](#public-api-overview-apiv1)
-    - [Scanner Endpoints](#scanner-endpoints)
-    - [API Endpoints](#api-endpoints)
-    - [News Endpoints](#news-endpoints)
+    - [Scanner Endpoints](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#post---httpsscannertradingviewcomglobalscan)
+    - [API Endpoints](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#post---httpsscannertradingviewcomglobalscan)
+    - [News Endpoints](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#post---httpsscannertradingviewcomglobalscan)
 - [Private API Overview](#private-api-overview-apiv1)
     - [Endpoints](#endpoints)
 - [Miscellaneous/Non-API](#miscellaneousnon-api)
