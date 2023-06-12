@@ -9,7 +9,7 @@ if you like this you can support me with following my socials or joining my disc
 
 
 
-### Index
+### Index 
 
 [Public API Contents](https://github.com/im-kuro/TradingveiwAPI/tree/main#public-api-overveiw-apiv1)
 - [Scanner Endpoints](https://github.com/im-kuro/TradingveiwAPI/tree/main#scanner-endpoints)
