@@ -29,13 +29,6 @@ https://news-headlines.tradingview.com/v2/
 
 
 
-FORMAT
-
-### REQ TYPE - ENDPOINT
-- payload
-- payload breakdown
-- response
-
 
 ## Endpoints documentation
 
@@ -722,3 +715,177 @@ GET /api/v1/symbols_list/custom/
 ---
 
 
+---
+
+
+## GET /symbols_list/active (same as /symbols_list/custom/ but not in an array, more testing to be done)
+
+
+Retrieves the list of symbols for a custom watchlist.
+
+### Request
+
+```bash
+GET /api/v1/symbols_list/active
+```
+
+### Response
+
+```json
+{
+	"id": 102259501,
+	"type": "custom",
+	"name": "Watchlist",
+	"symbols": [
+		"###MAINS",
+		"BLACKBULL:SPX500",
+		"FX:NAS100",
+		"FOREXCOM:XAUUSD",
+		"FX:GBPJPY",
+		"OANDA:EURJPY",
+		"FX:GBPUSD",
+		"OANDA:EURUSD",
+		"FX:USDJPY",
+		"CAPITALCOM:UK100",
+		"###INDICES",
+		"CURRENCYCOM:EU50"
+	],
+	"active": true,
+	"shared": false,
+	"color": null,
+	"description": null,
+	"created": "2023-01-30T13:30:42.256580Z",
+	"modified": "2023-05-26T13:29:00.902122Z"
+}
+```
+
+**Response Breakdown:**
+
+- `id` (integer): The unique identifier of the watchlist.
+- `type` (string): The type of the watchlist.
+- `name` (string): The name of the watchlist.
+- `symbols` (array): An array of symbols in the watchlist.
+- `active` (boolean): Indicates if the watchlist is active.
+- `shared` (boolean): Indicates if the watchlist is shared.
+- `color` (null): The color associated with the watchlist.
+- `description` (null): The description of the watchlist.
+- `created` (string): The timestamp of when the watchlist was created.
+- `modified` (string): The timestamp of when the watchlist was last modified.
+
+---
+
+
+
+
+---
+
+
+## GET /symbols_list/colored
+
+For each symbol you have saved that has a colored marker, this endpoint will return the symbol and the color associated with it.
+(no real use for this endpoint tbh lol)
+
+### Request
+
+```bash
+GET /api/v1/symbols_list/colored
+```
+
+### Response
+
+```json
+{
+[
+   {
+      "id":102392177,
+      "type":"colored",
+      "name":"",
+      "symbols":[
+         "BLACKBULL:SPX500"
+      ],
+      "shared":false,
+      "color":"red",
+      "description":null,
+      "created":"2023-01-31T15:58:06.743304Z",
+      "modified":"2023-06-19T19:31:02.555269Z"
+   },
+   {
+      "id":115246003,
+      "type":"colored",
+      "name":"",
+      "symbols":[
+         "OANDA:EURJPY"
+      ],
+      "shared":false,
+      "color":"green",
+      "description":null,
+      "created":"2023-06-19T19:31:01.003480Z",
+      "modified":"2023-06-19T19:31:02.555269Z"
+   },
+   {
+      "id":115246004,
+      "type":"colored",
+      "name":"",
+      "symbols":[
+         "FX:GBPJPY"
+      ],
+      "shared":false,
+      "color":"purple",
+      "description":null,
+      "created":"2023-06-19T19:31:02.554022Z",
+      "modified":"2023-06-19T19:31:02.555269Z"
+   },
+   {
+      "id":115246002,
+      "type":"colored",
+      "name":"",
+      "symbols":[
+         "FX:GBPUSD"
+      ],
+      "shared":false,
+      "color":"blue",
+      "description":null,
+      "created":"2023-06-19T19:30:59.786175Z",
+      "modified":"2023-06-19T19:31:02.555269Z"
+   }
+}
+```
+
+**Response Breakdown:**
+- `id` (integer): The unique identifier of the watchlist.
+- `type` (string): The type of the watchlist.
+- `name` (string): The name of the watchlist.
+- `symbols` (array): An array of symbols with that color.
+- `shared` (boolean): Indicates if the watchlist is shared.
+- `color` (string): The color associated with the watchlist.
+- `description` (string): The description of the watchlist.
+- `created` (string): The timestamp of when the watchlist was created.
+- `modified` (string): The timestamp of when the watchlist was last modified.
+---
+
+
+
+---
+
+
+## 
+
+
+
+### Request
+
+```bash
+
+```
+
+### Response
+
+```json
+
+```
+
+**Response Breakdown:**
+- `id` (integer): The unique identifier of the watchlist.
+
+
+---
