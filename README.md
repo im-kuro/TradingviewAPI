@@ -34,38 +34,28 @@ used for what i can only assume is google analytics and other things like that.
 
 - [Miscellaneous/Non-API](#miscellaneousnon-api)
 
-## Public API Overview /api/v1
+## Public API Overview (80% done)
 
-
-### **Scanner Endpoints:**
+#### **Scanner Endpoints:**
 
 - [POST /global/scan](https://github.com/im-kuro/TradingveiwAPI/tree/main#post-globalscan)
 - [POST /coin/scan](https://github.com/im-kuro/TradingveiwAPI/tree/main#post-coinscan)
 - [POST /america/scan](https://github.com/im-kuro/TradingveiwAPI/tree/main#post-americascan)
 
-### **API Endpoints:**
+#### **API Endpoints:**
 
 - [GET /study-templates](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-study-templates)
 - [GET /symbols_list/custom/](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-symbols-listcustom)
 - [GET /symbols_list/active](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-symbols-listactive)
 - [GET /symbols_list/colored](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-symbols-listcolored)
 
-### **News Endpoints:**
+#### **News Endpoints:**
 
 - [GET /headlines](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-headlines)
 
 
-## Private API Overview /api/v1
-
-
-
+## Private API Overview (10% done)
 - [GET /unreads/get](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-unreadsget) - Retrieve the current unread notifications for your account.
 
 
-
-## Miscellaneous/Non-API
-
-- [GET https://www.tradingview.com/notifications-data](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-httpswwwtradingviewcomnotifications-data) - Retrieve the current number of notifications.
-
----
 
