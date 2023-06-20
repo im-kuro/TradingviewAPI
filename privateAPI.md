@@ -13,53 +13,47 @@ https://charts-storage.tradingview.com/
 
 
 ## JWT Tokens
-Trading view uses JWT tokens to auth SOME requests. these tokens are used to auth users for the private api. They
-use a base64 encoded JWT token that can be decoded to get the user id and other info. The token is passed in as a query param.
-using RS512 they encrypt the token, The public key is used to decrypt the token. The public key is stored in the KID value aka (Key ID)
 
-JWT token decoded json
-{
-2 items
-"header":{
-	3 items
-	"alg":"RS512"
-	"kid":"Ahwb"
-	"typ":"JWT"
-}
-	"payload":{
-		7 items
-		"iss":"tv_chart"
-		"iat":1686337200
-		"exp":1687204800
-		"type":"owner"
-		"layoutId":"000000000"
-		"ownerId":00000000
-		"shared":false
-	}
-}
-### Explanation
+Trading View uses JWT tokens to authenticate certain requests. These tokens are utilized for authorizing users for the private API. The JWT token is in a base64-encoded format and can be decoded to retrieve the user ID and other relevant information. The token is passed as a query parameter.
 
-algRS512 = the algorithm used for signing the JWT
+### Encryption and Decryption
 
-kid = the thumbprint for the public key used to verify this token
+Trading View encrypts the JWT token using the RS512 algorithm. The public key is required to decrypt the token. The public key is stored in the Key ID (KID) value.
 
-typ = always set to "JWT"
+### Decoded JWT Token
 
-iss = the authorization server that issued the JWT
+The decoded JSON structure of the JWT token consists of two main sections: the header and the payload.
 
-iat = the time at which the JWT was issued
+#### Header:
 
-exp = the expiration time after which JWT must not be accepted
+- `alg`: RS512 (the algorithm used for signing the JWT)
+- `kid`: Ahwb (the thumbprint for the public key used to verify this token)
+- `typ`: JWT (always set to "JWT")
 
-type = owner
+#### Payload:
 
-layoutI = unique id for the layout
+- `iss`: tv_chart (the authorization server that issued the JWT)
+- `iat`: 1686337200 (the time at which the JWT was issued)
+- `exp`: 1687204800 (the expiration time after which the JWT must not be accepted)
+- `type`: owner (type of user)
+- `layoutId`: 000000000 (unique ID for the layout)
+- `ownerId`: 00000000 (unique ID for the owner)
+- `shared`: false (unknown boolean value)
 
-ownerId = unique id for the owner
+Please note that the "shared" field's purpose is unknown and requires further clarification.
 
-shared = unknown (boolean)
+## Explanation
 
-
+- `alg`: RS512 is the algorithm used for signing the JWT.
+- `kid`: The KID is the thumbprint for the public key used to verify this token.
+- `typ`: The typ field is always set to "JWT".
+- `iss`: The iss field represents the authorization server that issued the JWT.
+- `iat`: The iat field indicates the time at which the JWT was issued.
+- `exp`: The exp field represents the expiration time after which the JWT must not be accepted.
+- `type`: The type field specifies the type of user (in this case, "owner").
+- `layoutId`: The layoutId field contains a unique ID for the layout.
+- `ownerId`: The ownerId field contains a unique ID for the owner.
+- `shared`: The shared field's purpose is unknown, and further information is required for clarification.
 
 
 
@@ -148,29 +142,49 @@ The response is a JSON object with the following structure:
 
 **Response Breakdown:**
 - `success` (boolean): Indicates whether the request was successful or not.
-- `payload` (object): Contains the retrieved chart items.
-  - `sources` (object): Contains the individual chart items.
-    - `<source_id>`: An identifier for a specific chart item.
-      - `id` (string): The same identifier as `<source_id>`.
-      - `symbol` (string): The symbol associated with the chart item.
-      - `ownerSource` (string): The owner source of the chart item.
-      - `currencyId` (string): The currency ID associated with the chart item.
-      - `serverUpdateTime` (integer): The timestamp of the server update time.
-      - `state` (object): The state of the chart item.
-        - `type` (string): The type of the tool used for the chart item.
-        - `id` (string): The same identifier as `<source_id>`.
-        - `state` (object): The specific state details of the chart item.
-          - Various properties describing the chart item's appearance and characteristics.
-        - `points` (array): An array of points representing the chart item's data.
-          - `time_t` (integer): The timestamp of a point on the chart.
-          - `offset` (integer): The offset
 
- of a point on the chart.
+- `payload` (object): Contains the retrieved chart items.
+
+  - `sources` (object): Contains the individual chart items.
+
+    - `<source_id>`: An identifier for a specific chart item.
+
+      - `id` (string): The same identifier as `<source_id>`.
+
+      - `symbol` (string): The symbol associated with the chart item.
+
+      - `ownerSource` (string): The owner source of the chart item.
+
+      - `currencyId` (string): The currency ID associated with the chart item.
+
+      - `serverUpdateTime` (integer): The timestamp of the server update time.
+
+      - `state` (object): The state of the chart item.
+
+        - `type` (string): The type of the tool used for the chart item.
+
+        - `id` (string): The same identifier as `<source_id>`.
+
+        - `state` (object): The specific state details of the chart item.
+
+          - Various properties describing the chart item's appearance and characteristics.
+
+        - `points` (array): An array of points representing the chart item's data.
+
+          - `time_t` (integer): The timestamp of a point on the chart.
+
+          - `offset` (integer): The offset of a point on the chart.
+
           - `price` (float): The price value of a point on the chart.
+
         - `zorder` (integer): The z-order value of the chart item.
+
         - `ownerSource` (string): The owner source of the chart item.
+
         - `linkKey` (string): The link key associated with the chart item.
+
         - `sharingMode` (integer): The sharing mode of the chart item.
+
 
 Note: The response may contain multiple chart items under the `sources` object.
 

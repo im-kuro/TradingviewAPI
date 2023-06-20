@@ -32,7 +32,6 @@ used for what i can only assume is google analytics and other things like that.
     - [Endpoints](#endpoints)
 
 
-- [Miscellaneous/Non-API](#miscellaneousnon-api)
 
 ## Public API Overview (80% done)
 

@@ -71,8 +71,12 @@ https://news-headlines.tradingview.com/v2/
 **Payload Breakdown:**
 
 - `columns`: An array of column names to retrieve in the response.
+
 - `range`: A range specifying the start and end index of the result set.
+
 - `symbols`: An object containing ticker symbols.
+
+
 
 **Response:**
 
@@ -106,9 +110,13 @@ https://news-headlines.tradingview.com/v2/
 **Response Breakdown:**
 
 - `totalCount`: The total count of results returned in the response.
+
 - `data`: An array containing the data for each symbol.
+
   - `s`: The symbol for which data is provided.
+
   - `d`: An array containing the data values for the symbol.
+
 
 ---
 
@@ -143,10 +151,15 @@ https://news-headlines.tradingview.com/v2/
 **Payload Breakdown:**
 
 - `columns`: An array of column names to retrieve in the response.
+
 - `ignore_unknown_fields`: A boolean value indicating whether to ignore unknown fields in the payload.
+
 - `options`: An object containing additional options.
+
 - `range`: A range specifying the start and end index of the result set.
+
 - `markets`: An array specifying the market to scan.
+
 - `preset`: The preset to use for the scan.
 
 **Response:**
@@ -228,10 +241,15 @@ https://news-headlines.tradingview.com/v2/
 **Response Breakdown:**
 
 - `totalCount`: The total count of results returned in the response.
+
 - `data`: An array containing the data for each symbol.
+
   - `s`: The symbol for which data is provided.
+
   - `d`: An array containing the data values for the symbol.
+
 - `params`: Additional parameters related to the query and filtering.
+
 
 ---
 
@@ -273,11 +291,17 @@ https://news-headlines.tradingview.com/v2/
 **Payload Breakdown:**
 
 - `columns`: An array of column names to retrieve in the response.
+
 - `ignore_unknown_fields`: A boolean value indicating whether to ignore unknown fields in the payload.
+
 - `options`: An object containing additional options.
+
 - `range`: A range specifying the start and end index of the result set.
+
 - `markets`: An array specifying the market to scan.
+
 - `preset`: The preset to use for the scan.
+
 
 **Response:**
 
@@ -350,22 +374,36 @@ N/A (GET request does not include a payload.)
 
 **Options:**
 - `category`: Specifies the category of the headlines. In this example, the value is set to `base`.
+
 - `client`: Specifies the client for which the headlines are requested. In this example, the value is set to `overview`.
+
 - `lang`: Specifies the language of the headlines. In this example, the value is set to `en`.
+
 
 **Response:**
 
 
 The response will contain an array of headline items. Each item has the following properties:
+
 - `id`: The unique identifier of the headline (`benzinga:83599eeec094b:0` in the example).
+
 - `title`: The title of the headline (`Bitcoin Conference 2024: Swapping Miami Heat For Nashville Beats` in the example).
+
 - `provider`: The provider of the headline (`benzinga` in the example).
+
 - `sourceLogoId`: The ID of the source's logo (`benzinga` in the example).
+
 - `published`: The timestamp of when the headline was published (1686587469 in the example).
+
 - `source`: The source of the headline (`Benzinga` in the example).
+
 - `urgency`: The urgency level of the headline (2 in the example).
-- `link`: The URL of the full article (`https://www.benzinga.com/markets/cryptocurrency/23/06/32779449/bitcoin-conference-2024-swapping-miami-heat-for-nashville-beats` in the example).
+
+- `link`: The URL of the full article (`https://www.benzinga.com/markets/cryptocurrency/23/06/32779449/
+bitcoin-conference-2024-swapping-miami-heat-for-nashville-beats` in the example).
+
 - `permission`: The permission level for accessing the headline (`preview` in the example).
+
 - `storyPath`: The path to the news story (`/news/benzinga:83599eeec094b:0-bitcoin-conference-2024-swapping-miami-heat-for-nashville-beats/` in the example).
 ```json
 {
@@ -416,12 +454,19 @@ N/A (No specific options available for this endpoint.)
 
 The response will contain an object with a `standard` property, which holds an array of study templates. Each study template has the following properties:
 - `id`: The unique identifier of the study template.
+
 - `name`: The name of the study template.
+
 - `meta_info`: Additional metadata for the study template, including the following properties:
+
   - `indicators`: An array of indicators used in the study template, where each indicator has the following properties:
+
     - `id`: The identifier of the indicator.
+
     - `description`: The description of the indicator.
+
   - `interval`: The interval for which the study template is applicable (if specified).
+
 
 ```json
 {
@@ -497,21 +542,38 @@ N/A (No specific options available for this endpoint.)
 
 **Response:**
 The response will contain an array of objects, each representing a broker's trading panel. Each trading panel object has the following properties:
+
 - `id`: The unique identifier of the broker's trading panel.
+
 - `flags`: An array of flags representing the features or awards associated with the broker.
+
 - `flags_verbose`: An array of verbose descriptions for the flags.
-- `country_info`: Information about the country where the broker is located, including address, phone number, website, tradable instruments types, minimum deposit, maximum leverage, fees, promotions, regulations, and more.
+
+- `country_info`: Information about the country where the broker is located, including address, phone number, website, tradable instruments types, 
+minimum deposit, maximum leverage, fees, promotions, regulations, and more.
+
 - `slug_name`: The slug name of the broker.
+
 - `name`: The name of the broker.
+
 - `hidden`: Indicates whether the broker is hidden or not.
+
 - `rating`: The rating of the broker.
+
 - `username`: The username associated with the broker.
+
 - `header_image`: The URL of the header image for the broker.
+
 - `logo_square`: The URL of the square logo for the broker.
+
 - `plan`: The plan ID of the broker.
+
 - `plan_verbose`: The verbose description of the plan.
+
 - `reviews_count`: The total number of reviews for the broker.
+
 - `user_review_status`: Indicates whether the user has reviewed the broker or not.
+
 
 
 ```json
@@ -701,16 +763,28 @@ GET /api/v1/symbols_list/custom/
 
 **Response Breakdown:**
 
+
 - `id` (integer): The unique identifier of the watchlist.
+
 - `type` (string): The type of the watchlist.
+
 - `name` (string): The name of the watchlist.
+
 - `symbols` (array): An array of symbols in the watchlist.
+
 - `active` (boolean): Indicates if the watchlist is active.
+
 - `shared` (boolean): Indicates if the watchlist is shared.
+
 - `color` (null): The color associated with the watchlist.
+
 - `description` (null): The description of the watchlist.
+
 - `created` (string): The timestamp of when the watchlist was created.
+
 - `modified` (string): The timestamp of when the watchlist was last modified.
+
+
 
 ---
 
@@ -762,15 +836,25 @@ GET /api/v1/symbols_list/active
 **Response Breakdown:**
 
 - `id` (integer): The unique identifier of the watchlist.
+
 - `type` (string): The type of the watchlist.
+
 - `name` (string): The name of the watchlist.
+
 - `symbols` (array): An array of symbols in the watchlist.
+
 - `active` (boolean): Indicates if the watchlist is active.
+
 - `shared` (boolean): Indicates if the watchlist is shared.
+
 - `color` (null): The color associated with the watchlist.
+
 - `description` (null): The description of the watchlist.
+
 - `created` (string): The timestamp of when the watchlist was created.
+
 - `modified` (string): The timestamp of when the watchlist was last modified.
+
 
 ---
 
@@ -853,14 +937,23 @@ GET /api/v1/symbols_list/colored
 
 **Response Breakdown:**
 - `id` (integer): The unique identifier of the watchlist.
+
 - `type` (string): The type of the watchlist.
+
 - `name` (string): The name of the watchlist.
+
 - `symbols` (array): An array of symbols with that color.
+
 - `shared` (boolean): Indicates if the watchlist is shared.
+
 - `color` (string): The color associated with the watchlist.
+
 - `description` (string): The description of the watchlist.
+
 - `created` (string): The timestamp of when the watchlist was created.
+
 - `modified` (string): The timestamp of when the watchlist was last modified.
+
 ---
 
 
