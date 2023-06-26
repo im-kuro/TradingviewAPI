@@ -12,14 +12,6 @@ https://scanner.tradingview.com/
 
 
 
-https://www.tradingview.com/api/v1/
-## API Endpoints
-- GET /study-templates
-- GET /symbols_list/custom/
-- GET /symbols_list/active
-- GET /symbols_list/colored
-- GET /brokers/trading_panel
-
 https://news-headlines.tradingview.com/v2/
 ## News Endpoints
 - GET /headlines
@@ -28,96 +20,203 @@ https://news-headlines.tradingview.com/v2/
 
 
 
+https://www.tradingview.com/api/v1/
+## API Endpoints
+- GET /study-templates
+- GET /symbols_list/custom/
+- GET /symbols_list/active
+- GET /symbols_list/colored
+- GET /brokers/trading_panel
+
+
+
+
 
 
 ## Endpoints documentation
 
-
+- Please note some requests do not need headers. in fact im sure most public endpoints dont need headers, so have fun with that.
 
 ---
 
-### POST - https://scanner.tradingview.com/global/scan
+### Request
 
-**Payload:**
+The request should be made using the following parameters:
+
+- **URL:** `https://scanner.tradingview.com/global/scan`
+- **Method:** POST
+
+#### Headers
+
+The following headers should be included in the request:
+
+```
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+Content-Length: 240
+Content-Type: text/plain;charset=UTF-8
+Cookie: cookiePrivacyPreferenceBannerProduction=notApplicable; cookiesSettings={"analytics":true,"advertising":true}; _gid=; _sp_ses.cf1a=*; _gat_gtag_UA_24278967_1=1; _sp_id.cf1a=; _ga=; _ga_YVVRYGL0E0=;
+Host: scanner.tradingview.com
+Origin: https://www.tradingview.com
+Referer: https://www.tradingview.com/
+Sec-Ch-Ua: 
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: ""
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.110 Safari/537.36
+```
+
+#### Data
+
+The request body should contain the following JSON data:
 
 ```json
 {
-  "columns": [
-    "price_52_week_high",
-    "price_52_week_low",
-    "sector",
-    "country",
-    "Low.1M",
-    "High.1M",
-    "Perf.W",
-    "Perf.1M",
-    "Perf.3M",
-    "Perf.6M",
-    "Perf.Y",
-    "Perf.YTD",
-    "Recommend.All",
-    "average_volume_10d_calc"
-  ],
-  "range": [0, 3],
-  "symbols": {
-    "tickers": ["SP:SPX"]
-  }
+   "columns":[
+      "price_52_week_high",
+      "price_52_week_low",
+      "sector",
+      "country",
+      "Low.1M",
+      "High.1M",
+      "Perf.W",
+      "Perf.1M",
+      "Perf.3M",
+      "Perf.6M",
+      "Perf.Y",
+      "Perf.YTD",
+      "Recommend.All",
+      "average_volume_10d_calc"
+   ],
+   "range":[
+      0,
+      3
+   ],
+   "symbols":{
+      "tickers":[
+         "SP:SPX"
+      ]
+   }
 }
 ```
 
-**Options:**
-- None
+The `columns` field specifies the data fields you want to retrieve for each stock symbol. In the example above, the requested fields include the 52-week high and low prices, sector, country, 1-month low and high prices, weekly performance, 1-month performance, 3-month performance, 6-month performance, yearly performance, year-to-date performance, recommendation, and average volume.
 
-**Payload Breakdown:**
+The `range` field specifies the range of data you want to retrieve. In the example above, it is set to `[0, 3]`, which means you want to retrieve data for the first 3 symbols found.
 
-- `columns`: An array of column names to retrieve in the response.
+The `symbols` field contains the list of stock symbols you want to scan for. In the example above, it scans for the symbol "SP:SPX".
 
-- `range`: A range specifying the start and end index of the result set.
+### Response
 
-- `symbols`: An object containing ticker symbols.
-
-
-
-**Response:**
+The API will respond with a JSON object containing the requested data. Here's an example response:
 
 ```json
 {
-  "totalCount": 1,
-  "data": [
-    {
-      "s": "SP:SPX",
-      "d": [
-        4325.28,
-        3491.58,
-        null,
-        null,
-        4099.12,
-        4322.62,
-        1.36429766,
-        3.74371944,
-        9.86768964,
-        8.71737937,
-        4.80830885,
-        11.56362485,
-        0.39685315,
-        2569400000
-      ]
+	"totalCount": 1,
+	"data": [
+		{
+			"s": "SP:SPX",
+			"d": [
+				4375.37,
+				3491.58,
+				null,
+				null,
+				4103.98,
+				4375.37,
+				2.31777381,
+				5.60100905,
+				12.73234728,
+				10.40756675,
+				13.86579472,
+				13.41840349,
+				0.52622378,
+				2445100000
+			]
+		}
+	]
+}
+```
+
+The `totalCount` field indicates the total number of symbols found in the scan. In this example, it is set to 1.
+
+The `data` field contains an array of objects, where each object represents a stock symbol and its corresponding data. In the example above, the data for the symbol "SP:SPX" is provided.
+
+#### Python Example
+
+Here's an example Python code snippet to parse the response and extract the data:
+
+```python
+import requests
+import json
+
+url = "https://scanner.tradingview.com/global/scan"
+headers = {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Content-Length": "240",
+    "Content-Type": "text/plain;charset=UTF-8",
+    "Host": "scanner.tradingview.com",
+    "Origin": "https://www.tradingview.com",
+    "Referer": "https://www.tradingview.com/",
+    "Sec-Ch-Ua": "",
+    "Sec-Ch-Ua-Mobile": "?0",
+    "Sec-Ch-Ua-Platform": '""',
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "same-site",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.110 Safari/537.36",
+    "Cookie": "sessionid=; sessionid_sign="
+}
+
+data = {
+    "columns": [
+        "price_52_week_high",
+        "price_52_week_low",
+        "sector",
+        "country",
+        "Low.1M",
+        "High.1M",
+        "Perf.W",
+        "Perf.1M",
+        "Perf.3M",
+        "Perf.6M",
+        "Perf.Y",
+        "Perf.YTD",
+        "Recommend.All",
+        "average_volume_10d_calc"
+    ],
+    "range": [
+        0,
+        3
+    ],
+    "symbols": {
+        "tickers": [
+            "SP:SPX"
+        ]
     }
-  ]
 }
+
+response = requests.post(url, headers=headers, json=data)
+data = response.json()
+
+# Extracting the data
+totalCount = data["totalCount"]
+symbolData = data["data"][0]
+
+
+symbol = symbolData["s"]
+symbolValues = symbolData["d"]
+
+print(f"Total Count: {totalCount}")
+print(f"Symbol: {symbol}")
+print(f"Data: {symbolValues}")
 ```
 
-**Response Breakdown:**
-
-- `totalCount`: The total count of results returned in the response.
-
-- `data`: An array containing the data for each symbol.
-
-  - `s`: The symbol for which data is provided.
-
-  - `d`: An array containing the data values for the symbol.
-
-
+This code sends a POST request to the API endpoint, retrieves the response, and extracts the relevant data from the JSON response.
 ---
 
 
@@ -125,130 +224,231 @@ https://news-headlines.tradingview.com/v2/
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 
-### POST - /america/scan
 
-**Payload:**
+This documentation provides information on how to use the TradingView Coin Scanner API to retrieve cryptocurrency data. The API allows you to send a POST request to the endpoint `https://scanner.tradingview.com/coin/scan` in order to scan for specific coins and retrieve relevant information.
+
+### Request
+
+The request should be made using the following parameters:
+
+- **URL:** `https://scanner.tradingview.com/coin/scan`
+- **Method:** POST
+
+#### Headers
+
+The following headers should be included in the request:
+
+```
+Host: scanner.tradingview.com
+Content-Length: 224
+Sec-Ch-Ua: 
+Accept: application/json
+Content-Type: text/plain;charset=UTF-8
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.91 Safari/537.36
+Sec-Ch-Ua-Platform: \"\"
+Origin: https://www.tradingview.com
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://www.tradingview.com/
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+Connection: close
+Cookie: _sp_ses.cf1a=*; _sp_id.cf1a=
+```
+
+#### Data
+
+The request body should contain the following JSON data:
 
 ```json
 {
-  "columns": ["description", "logoid", "type"],
-  "ignore_unknown_fields": false,
-  "options": {
-    "lang": "en"
-  },
-  "range": [0, 6],
-  "markets": ["america"],
-  "preset": "volume_leaders"
+   "columns":[
+      "base_currency_desc",
+      "base_currency_logoid",
+      "type",
+      "market_cap_calc",
+      "exchange",
+      "typespecs"
+   ],
+   "ignore_unknown_fields":false,
+   "options":{
+      "lang":"en"
+   },
+   "range":[
+      0,
+      2
+   ],
+   "markets":[
+      "coin"
+   ],
+   "preset":"coin_market_cap_rank"
 }
 ```
 
-**Options:**
+The `columns` field specifies the data fields you want to retrieve for each coin. In the example above, the requested fields include the base currency description, base currency logo ID, type, market capitalization, exchange, and typespecs.
 
-- `lang`: Language option (in this case, set to "en").
+The `ignore_unknown_fields` field is set to `false`, indicating that unknown fields should not be ignored.
 
-**Payload Breakdown:**
+The `options` field allows you to specify additional options. In this example, the `lang` option is set to "en" for English.
 
-- `columns`: An array of column names to retrieve in the response.
+The `range` field specifies the range of data you want to retrieve. In the example above, it is set to `[0, 2]`, which means you want to retrieve data for the first 2 coins.
 
-- `ignore_unknown_fields`: A boolean value indicating whether to ignore unknown fields in the payload.
+The `markets` field specifies the markets to scan. In this example, it scans the "coin" market.
 
-- `options`: An object containing additional options.
+The `preset` field is set to "coin_market_cap_rank", indicating that the data should be sorted based on the coin market capitalization rank.
 
-- `range`: A range specifying the start and end index of the result set.
+### Response
 
-- `markets`: An array specifying the market to scan.
-
-- `preset`: The preset to use for the scan.
-
-**Response:**
+The API will respond with a JSON object containing the requested data. Here's an example response:
 
 ```json
 {
-  "totalCount": 4848,
-  "data": [
-    {
-      "s": "AMEX:TMBR",
-      "d": [
-        "Timber Pharmaceuticals, Inc.",
-        "timber-pharmaceuticals",
-        "stock"
-      ]
-    }
-  ],
-  "params": {
-    "america": {
-      "symbols": {
-        "query": {
-          "types": [
-            "stock",
-            "fund",
-            "dr",
-            "structured"
-          ]
-        }
-      },
-      "filter": [
-        {
-          "left": "exchange",
-          "operation": "in_range",
-          "right": [
-            "AMEX",
-            "NASDAQ",
-            "NYSE"
-          ]
-        },
-        {
-          "left": "is_primary",
-          "operation": "equal",
-          "right": true
-        },
-        {
-          "left": "typespecs",
-          "operation": "has",
-          "right": "common"
-        },
-        {
-          "left": "typespecs",
-          "operation": "has_none_of",
-          "right": "preferred"
-        },
-        {
-          "left": "type",
-          "operation": "equal",
-          "right": "stock"
-        },
-        {
-          "left": "active_symbol",
-          "operation": "equal",
-          "right": true
-        }
-      ],
-      "sort": {
-        "sortBy": "relative_volume_10d_calc",
-        "sortOrder": "desc",
-        "nullsFirst": false
-      },
-      "options": {
-        "lang": "en"
-      }
-    }
-  }
+	"totalCount": 749,
+	"data": [
+		{
+			"s": "CRYPTO:BTCUSD",
+			"d": [
+				"Bitcoin",
+				"crypto/XTVCBTC",
+				"spot",
+        500857765687.17,
+				"CRYPTO",
+				[
+					"crypto",
+					"cryptoasset",
+					"synthetic"
+				]
+			]
+		},
+		{
+			"s": "CRYPTO:ETHUSD",
+			"d": [
+				"Ethereum",
+				"crypto/XTVCETH",
+				"spot",
+				208756093358.23952,
+				"CRYPTO",
+				[
+					"crypto",
+					"cryptoasset",
+					"synthetic"
+				]
+			]
+		}
+	],
+	"params": {
+		"coin": {
+			"symbols": {
+				"query": {
+					"typespecs": [
+						"cryptoasset"
+					]
+				}
+			},
+			"sort": {
+				"sortBy": "crypto_total_rank",
+				"sortOrder": "asc",
+				"nullsFirst": false
+			},
+			"options": {
+				"lang": "en"
+			}
+		}
+	}
 }
 ```
 
-**Response Breakdown:**
+The `totalCount` field indicates the total number of coins found in the scan. In this example, it is set to 749.
 
-- `totalCount`: The total count of results returned in the response.
+The `data` field contains an array of objects, where each object represents a coin and its corresponding data. Each object contains an `s` field representing the symbol of the coin and a `d` field containing an array of data values for the coin.
 
-- `data`: An array containing the data for each symbol.
+### Python Example
 
-  - `s`: The symbol for which data is provided.
+Here's an example Python code snippet to parse the response and extract the data:
 
-  - `d`: An array containing the data values for the symbol.
+```python
+import requests
+import json
 
-- `params`: Additional parameters related to the query and filtering.
+url = "https://scanner.tradingview.com/coin/scan"
+headers = {
+    "Host": "scanner.tradingview.com",
+    "Content-Length": "224",
+    "Sec-Ch-Ua": "",
+    "Accept": "application/json",
+    "Content-Type": "text/plain;charset=UTF-8",
+    "Sec-Ch-Ua-Mobile": "?0",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.91 Safari/537.36",
+    "Sec-Ch-Ua-Platform": "\"\"",
+    "Origin": "https://www.tradingview.com",
+    "Sec-Fetch-Site": "same-site",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Dest": "empty",
+    "Referer": "https://www.tradingview.com/",
+    "Accept-Encoding": "gzip, deflate",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Connection": "close",
+    "Cookie": "_sp_ses.cf1a=*; _sp_id.cf1a="
+}
+
+data = {
+   "columns":[
+      "base_currency_desc",
+      "base_currency_logoid",
+      "type",
+      "market_cap_calc",
+      "exchange",
+      "typespecs"
+   ],
+   "ignore_unknown_fields":false,
+   "options":{
+      "lang":"en"
+   },
+   "range":[
+      0,
+      2
+   ],
+   "markets":[
+      "coin"
+   ],
+   "preset":"coin_market_cap_rank"
+}
+
+response = requests.post(url, headers=headers, json=data)
+data = response.json()
+
+totalCount = data["totalCount"]
+coinData = data["data"]
+
+for coin in coinData
+
+:
+    symbol = coin["s"]
+    values = coin["d"]
+    print("Symbol:", symbol)
+    print("Values:", values)
+    print()
+```
+
+This example uses the `requests` library to send the HTTP POST request to the API endpoint and retrieve the response. The response is then parsed as JSON, and the coin symbols and values are extracted and printed.
 
 
 ---
@@ -258,153 +458,187 @@ https://news-headlines.tradingview.com/v2/
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 
-### POST - /coin/scan
+This documentation provides information on how to use the TradingView Scanner API to perform a scan for stocks in the American market based on preset criteria.
 
-**Payload:**
+### Request
+
+The request should be made using the following parameters:
+
+- **URL:** `https://scanner.tradingview.com/america/scan`
+- **Method:** POST
+
+#### Headers
+
+The following headers should be included in the request:
+
+```
+Accept: application/json
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+Connection: close
+Content-Length: 151
+Content-Type: text/plain;charset=UTF-8
+Host: scanner.tradingview.com
+Origin: https://www.tradingview.com
+Referer: https://www.tradingview.com/
+Sec-Ch-Ua:
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: ""
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.110 Safari/537.36
+```
+
+#### Cookies
+
+The following cookie should be included in the request:
+
+```
+Cookie: sessionid=zn6h0b7vl3jk6m0ktqf5ox85aga2i57l; sessionid_sign=v1%3AFvYQ99BUyRHVIg9Tv6GcLWIrOnSNpN3wA0Nj%2BjZNdIQ%3D
+```
+
+#### Request Body
+
+The request body should be a JSON object with the following fields:
+
+- `columns`: An array of column names to include in the response. In the example, the columns are `["description", "logoid", "type"]`.
+- `ignore_unknown_fields`: A boolean value indicating whether to ignore unknown fields. In the example, it's set to `false`.
+- `options`: An object containing additional options. In the example, the `lang` option is set to `"en"`.
+- `range`: An array specifying the range of results to retrieve. In the example, it's set to `[0, 9]`.
+- `markets`: An array specifying the markets to scan. In the example, only the American market is specified.
+- `preset`: A string specifying the preset criteria for the scan. In the example, the preset is set to `"losers"`.
+
+### Response
+
+The API will respond with a JSON object containing the scan results. The response includes the following fields:
+
+- `totalCount`: The total count of results matching the scan criteria.
+- `data`: An array of objects representing the scan results. Each object has the following fields:
+  - `s`: The symbol of the stock.
+  - `d`: An array containing data related to the stock, such as its description, logoid, and type.
+
+Here's an example response:
 
 ```json
 {
-  "columns": [
-    "base_currency_desc",
-    "base_currency_logoid",
-    "type",
-    "market_cap_calc",
-    "exchange",
-    "typespecs"
-  ],
-  "ignore_unknown_fields": false,
-  "options": {
-    "lang": "en"
-  },
-  "range": [0, 9],
-  "markets": ["coin"],
-  "preset": "coin_market_cap_rank"
+	"totalCount": 2566,
+	"data": [
+		{
+			"s": "NASDAQ:BAOS",
+			"d": [
+				"Baosheng Media Group Holdings Limited",
+				"baosheng-media-limited",
+				"stock"
+			]
+		},
+		{
+			"s": "NYSE:PL",
+			"d": [
+				"Planet Labs PBC",
+				"planet-labs",
+				"stock"
+			]
+		},
+		{
+			"s": "NASDAQ:PEPG",
+			"d": [
+				"PepGen Inc.",
+
+
+				"",
+				"stock"
+			]
+		}
+	]
 }
 ```
 
-**Options:**
-
-- `lang`: Language option (in this case, set to "en").
-
-**Payload Breakdown:**
-
-- `columns`: An array of column names to retrieve in the response.
-
-- `ignore_unknown_fields`: A boolean value indicating whether to ignore unknown fields in the payload.
-
-- `options`: An object containing additional options.
-
-- `range`: A range specifying the start and end index of the result set.
-
-- `markets`: An array specifying the market to scan.
-
-- `preset`: The preset to use for the scan.
-
-
-**Response:**
-
-```json
-{
-  "totalCount": 749,
-  "data": [
-    {
-      "s": "CRYPTO:BTCUSD",
-      "d": [
-        "Bitcoin",
-        "crypto/XTVCBTC",
-        "spot",
-        499283284255.42,
-        "CRYPTO",
-        ["crypto", "cryptoasset", "synthetic"]
-      ]
-    },
-    {
-      "s": "CRYPTO:ETHUSD",
-      "d": [
-        "Ethereum",
-        "crypto/XTVCETH",
-        "spot",
-        217863806667.2324,
-        "CRYPTO",
-        ["crypto", "cryptoasset", "synthetic"]
-      ]
-    },
-    {
-      "s": "CRYPTO:USDTUSD",
-      "d": [
-        "Tether",
-        "crypto/XTVCUSDT",
-        "spot",
-        83311157336.59897,
-        "CRYPTO",
-        ["crypto", "cryptoasset", "synthetic"]
-      ]
-    }
-  ]
-}
-```
-
-**Response Breakdown:**
-
-- `totalCount`: The total count of results returned in the response.
-- `data`: An array containing the data for each symbol.
-  - `s`: The symbol for which data is provided.
-  - `d`: An array containing the data values for the symbol.
+This example shows three scan results, each represented by an object in the `data` array. Each object contains the symbol (`s`) and data (`d`) related to the stock.
 
 ---
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
+This documentation provides information on how to use the TradingView News Headlines API to retrieve news headlines related to financial markets. The API allows you to send a GET request to the endpoint `https://news-headlines.tradingview.com/v2/headlines` with specific parameters to filter the news articles.
 
-### GET - /v2/headlines
+### Request
 
-**Endpoint:**
+The request should be made using the following parameters:
+
+- **URL:** `https://news-headlines.tradingview.com/v2/headlines`
+- **Method:** GET
+
+#### Headers
+
+The following headers should be included in the request:
+
 ```
-https://news-headlines.tradingview.com/v2/headlines?category=base&client=overview&lang=en
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+Host: news-headlines.tradingview.com
+Origin: https://www.tradingview.com
+Referer: https://www.tradingview.com/
+Sec-Ch-Ua: 
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: ""
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.91 Safari/537.36
 ```
 
-**Description:**
-This endpoint retrieves headlines from TradingView's news service. It allows you to filter headlines by category, client, and language.
+### Response
 
-**Payload:**
-N/A (GET request does not include a payload.)
+The API will respond with a JSON object containing the requested news headlines. Here's an example response:
 
-**Options:**
-- `category`: Specifies the category of the headlines. In this example, the value is set to `base`.
-
-- `client`: Specifies the client for which the headlines are requested. In this example, the value is set to `overview`.
-
-- `lang`: Specifies the language of the headlines. In this example, the value is set to `en`.
-
-
-**Response:**
-
-
-The response will contain an array of headline items. Each item has the following properties:
-
-- `id`: The unique identifier of the headline (`benzinga:83599eeec094b:0` in the example).
-
-- `title`: The title of the headline (`Bitcoin Conference 2024: Swapping Miami Heat For Nashville Beats` in the example).
-
-- `provider`: The provider of the headline (`benzinga` in the example).
-
-- `sourceLogoId`: The ID of the source's logo (`benzinga` in the example).
-
-- `published`: The timestamp of when the headline was published (1686587469 in the example).
-
-- `source`: The source of the headline (`Benzinga` in the example).
-
-- `urgency`: The urgency level of the headline (2 in the example).
-
-- `link`: The URL of the full article (`https://www.benzinga.com/markets/cryptocurrency/23/06/32779449/
-bitcoin-conference-2024-swapping-miami-heat-for-nashville-beats` in the example).
-
-- `permission`: The permission level for accessing the headline (`preview` in the example).
-
-- `storyPath`: The path to the news story (`/news/benzinga:83599eeec094b:0-bitcoin-conference-2024-swapping-miami-heat-for-nashville-beats/` in the example).
 ```json
 {
 	"items": [
@@ -420,316 +654,438 @@ bitcoin-conference-2024-swapping-miami-heat-for-nashville-beats` in the example)
 			"permission": "preview",
 			"storyPath": "/news/benzinga:83599eeec094b:0-bitcoin-conference-2024-swapping-miami-heat-for-nashville-beats/"
 		}
-   ]
-}
-```
-Please note that the provided JSON response represents a single headline item. The actual response may contain multiple items in the `items` array.
-
----
-
-
-
----
-
-### GET - /api/v1/study-templates
-
-**Endpoint:**
-```
-https://www.tradingview.com/api/v1/study-templates
-```
-
-**Description:**
-This endpoint retrieves a list of study templates from TradingView's API. Study templates are pre-configured sets of indicators that can be applied to charts for technical analysis.
-
-**Payload:**
-N/A (GET request does not include a payload.)
-
-**Options:**
-N/A (No specific options available for this endpoint.)
-
-
-**Response:**
-
-
-
-The response will contain an object with a `standard` property, which holds an array of study templates. Each study template has the following properties:
-- `id`: The unique identifier of the study template.
-
-- `name`: The name of the study template.
-
-- `meta_info`: Additional metadata for the study template, including the following properties:
-
-  - `indicators`: An array of indicators used in the study template, where each indicator has the following properties:
-
-    - `id`: The identifier of the indicator.
-
-    - `description`: The description of the indicator.
-
-  - `interval`: The interval for which the study template is applicable (if specified).
-
-
-```json
-{
-  "standard": [
-    {
-      "id": 1,
-      "name": "Bill Williams' 3 Lines",
-      "meta_info": {
-        "indicators": [
-          {
-            "id": "Volume",
-            "description": "Volume"
-          },
-          {
-            "id": "MASimple",
-            "description": "Moving Average"
-          },
-          {
-            "id": "MASimple",
-            "description": "Moving Average"
-          },
-          {
-            "id": "MASimple",
-            "description": "Moving Average"
-          }
-        ],
-        "interval": null
-      }
-    },
-    {
-      "id": 2,
-      "name": "Displaced EMA",
-      "meta_info": {
-        "indicators": [
-          {
-            "id": "Volume",
-            "description": "Volume"
-          },
-          {
-            "id": "MAExp",
-            "description": "Moving Average Exponential"
-          }
-        ],
-        "interval": null
-      }
-    }
-  ]
+	]
 }
 ```
 
-In the example response, there are two study templates: "Bill Williams' 3 Lines" and "Displaced EMA". Each template includes a list of indicators used in the study template, along with their respective descriptions.
+The `items` field contains an array of news articles, where each article is represented by an object. In the example above, there is one news article provided.
 
----
+The fields within each news article object include:
 
+- `id`: The unique identifier of the news article.
+- `title`: The title of the news article.
+- `provider`: The provider or source of the news article.
+- `sourceLogoId`: The logo ID associated with the news source.
+- `published`: The timestamp indicating when the article was published.
+- `source`: The name of the news source.
+- `urgency`: The urgency level of the news article.
+- `link`: The URL link to the full article.
+- `permission`: The permission level for accessing the article (e.g., "preview").
+- `storyPath`: The path to the news story on the TradingView website.
 
----
+#### Python Example
 
-### GET - /api/v1/brokers/trading_panel
+Here's an example Python code snippet to retrieve and parse the news headlines:
 
-**Endpoint:**
-```
-https://www.tradingview.com/api/v1/brokers/trading_panel
-```
+```python
+import requests
+import json
 
-**Description:**
-This endpoint retrieves information about a specific broker's trading panel. The trading panel provides details about the broker, including contact information, trading instruments offered, fees, regulations, promotions, and more.
+url = "https://news-headlines.tradingview.com/v2/headlines"
+headers = {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Host": "news
 
-**Payload:**
-N/A (GET request does not include a payload.)
+-headlines.tradingview.com",
+    "Origin": "https://www.tradingview.com",
+    "Referer": "https://www.tradingview.com/",
+    "Sec-Ch-Ua": "",
+    "Sec-Ch-Ua-Mobile": "?0",
+    "Sec-Ch-Ua-Platform": '""',
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "same-site",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.91 Safari/537.36",
+    "Cookie": "sessionid=zn6h0b7vl3jk6m0ktqf5ox85aga2i57l; sessionid_sign=v1%3AFvYQ99BUyRHVIg9Tv6GcLWIrOnSNpN3wA0Nj%2BjZNdIQ%3D"
+}
 
-**Options:**
-N/A (No specific options available for this endpoint.)
+response = requests.get(url, headers=headers)
+data = response.json()
 
-**Response:**
-The response will contain an array of objects, each representing a broker's trading panel. Each trading panel object has the following properties:
+# Extracting the news headlines
+items = data["items"]
 
-- `id`: The unique identifier of the broker's trading panel.
-
-- `flags`: An array of flags representing the features or awards associated with the broker.
-
-- `flags_verbose`: An array of verbose descriptions for the flags.
-
-- `country_info`: Information about the country where the broker is located, including address, phone number, website, tradable instruments types, 
-minimum deposit, maximum leverage, fees, promotions, regulations, and more.
-
-- `slug_name`: The slug name of the broker.
-
-- `name`: The name of the broker.
-
-- `hidden`: Indicates whether the broker is hidden or not.
-
-- `rating`: The rating of the broker.
-
-- `username`: The username associated with the broker.
-
-- `header_image`: The URL of the header image for the broker.
-
-- `logo_square`: The URL of the square logo for the broker.
-
-- `plan`: The plan ID of the broker.
-
-- `plan_verbose`: The verbose description of the plan.
-
-- `reviews_count`: The total number of reviews for the broker.
-
-- `user_review_status`: Indicates whether the user has reviewed the broker or not.
-
-
-
-```json
-[
-  {
-    "id": 8,
-    "flags": [
-      "featured",
-      "ba_of_the_year",
-      "ba_innovative_tech",
-      "ba_multi_asset",
-      "ba_of_the_year_2021",
-      "ba_multi_asset_2021",
-      "ba_multi_asset_2022"
-    ],
-    "flags_verbose": [
-      "Featured",
-      "Broker of the Year 2020",
-      "Most Innovative Tech 2020",
-      "Best Multi-Asset Broker 2020",
-      "Broker of the Year 2021",
-      "Best Multi-Asset Broker 2021",
-      "Best Multi-Asset Broker 2022"
-    ],
-    "country_info": {
-      "countries_codes": [
-        "US"
-      ],
-      "countries": [
-        "USA"
-      ],
-      "about_ast": {
-        "type": "root",
-        "children": [
-          "TradeStation pursues a singular vision; to offer the ultimate online trading platform and services for self-directed traders and investors across the equities, equity/index options, futures, futures options and cryptocurrencies markets. TradeStation is already a recognized industry leader and is on a mission to build something even better. Equities and Futures accounts are offered by TradeStation Securities, Inc. Crypto accounts are offered by TradeStation Crypto, Inc.\r\n\r\n",
-          {
-            "type": "url",
-            "params": {
-              "url": "https://www.tradestation.com/important-information/?utm_source=tradingview&utm_medium=referral&utm_content=Broker%2BPage%2B-%2BImportant%2BDocuments/",
-              "linkText": "Important Documents",
-              "relFollow": false
-            }
-          }
-        ]
-      },
-      "site": {
-        "link": "https://www.tradestation.com/?utm_source=tradingview&utm_medium=referral&utm_content=Broker+Page+-+Contacts",
-        "text": "www.tradestation.com"
-      },
-      "address": "8050 SW 10th Street,  Plantation, FL 33324, US",
-      "phone": "+1 800-328-9861",
-      "twitter": "TradeStation",
-      "tradable_instruments_types": [
-        [
-          "stock",
-          "Stocks"
-        ],
-        [
-          "crypto",
-          "Crypto"
-        ],
-        [
-          "futures",
-          "Futures"
-        ]
-      ],
-      "min_deposit": "0.00",
-      "max_leverage": null,
-      "fees": "Micro futures: $0.25 per contract\r\nFutures: $0.75 per contract\r\nStocks: $0\r\nOptions: $0.60 per contract",
-      "fees_short": null,
-      "promotion": "$0.25 on micros and $0.75 on standard contracts",
-      "promotion_link": {
-        "link": "https://www.tradestation.com/promo/tradingview-pricing-focused-7/",
-        "text": "www.tradestation.com"
-      },
-      "promotion_short": "New futures pricing!",
-      "spread": null,
-      "regulation": [
-        {
-          "abbreviation": "CFTC",
-          "name": "Commodity Futures Trading Commission",
-          "territory": "USA"
-        },
-        {
-          "abbreviation": "FinCEN",
-          "name": "Financial Crimes Enforcement Network",
-          "territory": "USA"
-        },
-        {
-          "abbreviation": "FINRA",
-          "name": "Financial Industry Regulatory Authority, Inc.",
-          "territory": "USA"
-        },
-        {
-          "abbreviation": "NFA",
-          "name": "National Futures Association",
-          "territory": "USA"
-        },
-        {
-          "abbreviation": "SEC",
-          "name": "U.S. Securities and Exchange Commission",
-          "territory": "USA"
-        },
-        {
-          "abbreviation": "FCA",
-          "name": "Financial Conduct Authority ",
-          "territory": "United Kingdom"
-        },
-        {
-          "abbreviation": "State MSB",
-          "name": "Money Services Business",
-          "territory": "USA"
-        }
-      ],
-      "flags": [
-        "open_account"
-      ],
-      "referral_link": {
-        "link": "https://www.tradestation.com/",
-        "text": "www.tradestation.com"
-      }
-    },
-    "slug_name": "TRADESTATION",
-    "name": "TradeStation",
-    "hidden": false,
-    "rating": 4.45,
-    "username": "TradeStation",
-    "header_image": "https://s3.tradingview.com/brokers/headers/TS-TradingView-Hero.svg",
-    "logo_square": "https://s3.tradingview.com/brokers/logo/TradeStation_logo_square.svg",
-    "plan": 3,
-    "plan_verbose": "platinum",
-    "reviews_count": 8926,
-    "user_review_status": false
-  }
-]
+for item in items:
+    newsId = item["id"]
+    title = item["title"]
+    provider = item["provider"]
+    sourceLogoId = item["sourceLogoId"]
+    published = item["published"]
+    source = item["source"]
+    urgency = item["urgency"]
+    link = item["link"]
+    permission = item["permission"]
+    storyPath = item["storyPath"]
+    
+    # Process the news data as needed
+    print(f"News ID: {newsId}")
+    print(f"Title: {title}")
+    print(f"Provider: {provider}")
+    print(f"Source Logo ID: {sourceLogoId}")
+    print(f"Published: {published}")
+    print(f"Source: {source}")
+    print(f"Urgency: {urgency}")
+    print(f"Link: {link}")
+    print(f"Permission: {permission}")
+    print(f"Story Path: {storyPath}")
+    print()
 ```
 
-In the example response, there is a single trading panel object for TradeStation. It includes various information about the broker, such as flags, country info, address, phone number, website, tradable instrument types, fees, promotions, regulations, and more.
-
----
-
+This code sends a GET request to the API endpoint, retrieves the response, and extracts the relevant data from the JSON response.
 
 
 ---
 
-## GET - /symbols_list/custom/
 
-Retrieves the list of symbols for a custom watchlist.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+This documentation provides information on how to use the TradingView Study Templates API to retrieve a list of standard study templates available on TradingView. Study templates are pre-configured sets of technical indicators and settings that can be applied to charts for analysis.
 
 ### Request
 
-```bash
-GET /api/v1/symbols_list/custom/
+The request should be made using the following parameters:
+
+- **URL:** `https://www.tradingview.com/api/v1/study-templates`
+- **Method:** GET
+
+#### Headers
+
+The following headers should be included in the request:
+
+```
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+Host: www.tradingview.com
+Referer: https://www.tradingview.com/chart/?symbol=SPX
+Sec-Ch-Ua:
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: ""
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.91 Safari/537.36
+X-Language: en
+X-Requested-With: XMLHttpRequest
+```
+
+#### Cookies
+
+The following cookie should be included in the request:
+
+```
+Cookie: sessionid=zn6h0b7vl3jk6m0ktqf5ox85aga2i57l; sessionid_sign=v1%3AFvYQ99BUyRHVIg9Tv6GcLWIrOnSNpN3wA0Nj%2BjZNdIQ%3D
 ```
 
 ### Response
+
+The API will respond with a JSON object containing the list of standard study templates. Each template is represented as an object with the following fields:
+
+- `id`: The unique identifier of the study template.
+- `name`: The name of the study template.
+- `meta_info`: Additional information about the study template, including the list of indicators and their descriptions, and the interval (if applicable).
+
+Here's an example response:
+
+```json
+{
+	"standard": [
+		{
+			"id": 1,
+			"name": "Bill Williams' 3 Lines",
+			"meta_info": {
+				"indicators": [
+					{
+						"id": "Volume",
+						"description": "Volume"
+					},
+					{
+						"id": "MASimple",
+						"description": "Moving Average"
+					},
+					{
+						"id": "MASimple",
+						"description": "Moving Average"
+					},
+					{
+						"id": "MASimple",
+						"description": "Moving Average"
+					}
+				],
+				"interval": null
+			}
+		},
+		{
+			"id": 2,
+			"name": "Displaced EMA",
+			"meta_info": {
+				"indicators": [
+					{
+						"id": "Volume",
+						"description": "Volume"
+					},
+					{
+						"id": "MAExp",
+						"description": "Moving Average Exponential"
+					}
+				],
+				"interval": null
+			}
+		},
+		{
+			"id": 3,
+			"name": "MA Exp Ribbon",
+			"meta_info": {
+				"indicators": [
+					{
+						"id": "Volume",
+						"description": "Volume"
+					},
+					{
+						"id": "MAExp",
+						"description": "Moving Average Exponential"
+					}
+				],
+				"interval": null
+			}
+		},
+		{
+			"id": 6,
+			"name": "Oscillators",
+			"meta_info": {
+				"indicators": [
+					{
+						"id": "Volume",
+						"description": "Volume"
+					},
+						...
+				],
+				"interval": null
+			}
+		},
+		{
+			"id": 5,
+			"name": "Swing Trading",
+			"meta_info": {
+				"indicators": [
+					{
+						"id": "ZigZag@tv-basicstudies",
+						"description": "Zig Zag"
+					},
+						...
+				],
+				"interval": null
+			}
+		}
+	]
+}
+```
+
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+
+This documentation provides an overview of the TradingView Brokers API and explains the requests and responses involved in retrieving broker information. It also includes simple example Python code to parse the data returned by the API.
+
+### Get Brokers Trading Panel
+
+Retrieve information about brokers available on TradingView's trading panel.
+
+#### Request
+
+**Payload:**
+N/A (GET request does not include a payload.)
+
+**Options:**
+N/A (No specific options available for this endpoint.)
+
+
+```python
+import requests
+
+url = "https://www.tradingview.com/api/v1/brokers/trading_panel"
+
+headers = {
+    'Accept': '*/*',
+    'Accept-Encoding': 'gzip, deflate',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Cookie': 'cookiePrivacyPreferenceBannerProduction=notApplicable; cookiesSettings={\"analytics\":true,\"advertising\":true}; _gid=GA1.2.1046925617.1686023754; _sp_ses.cf1a=*; _ga=GA1.2.1116477781.1686022716; _gat_gtag_UA_24278967_1=1; _ga_YVVRYGL0E0=GS1.1.1686069076.2.1.1686071161.45.0.0; _sp_id.cf1a=01cd3c5e-82a2-4585-aca3-85196c82d85e.1686022716.2.1686071161.1686024878.40aed288-6693-47c5-94c2-9943ae540418',
+    'Host': 'www.tradingview.com',
+    'Referer': 'https://www.tradingview.com/chart/?symbol=SPX',
+    'Sec-Ch-Ua': '',
+    'Sec-Ch-Ua-Mobile': '?0',
+    'Sec-Ch-Ua-Platform': '""',
+    'Sec-Fetch-Dest': 'empty',
+    'Sec-Fetch-Mode': 'cors',
+    'Sec-Fetch-Site': 'same-origin',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.91 Safari/537.36',
+    'X-Language': 'en',
+    'X-Requested-With': 'XMLHttpRequest',
+    'cookie': 'sessionid=zn6h0b7vl3jk6m0ktqf5ox85aga2i57l; sessionid_sign=v1%3AFvYQ99BUyRHVIg9Tv6GcLWIrOnSNpN3wA0Nj%2BjZNdIQ%3D'
+}
+
+response = requests.get(url, headers=headers)
+data = response.json()
+print(data)
+```
+
+#### Response
+
+```json
+[
+	{
+		"id": 8,
+		"flags": [
+			"featured",
+			"ba_of_the_year",
+			"ba_innovative_tech",
+			"ba_multi_asset",
+			"ba_of_the_year_2021",
+			"ba_multi_asset_2021",
+			"ba_multi_asset_2022"
+		],
+		"flags_verbose": [
+			"Featured",
+			"Broker of the Year 2020",
+			"Most Innovative Tech 2020",
+			"Best Multi-Asset Broker 2020",
+			"Broker of the Year 2021",
+			"Best Multi-Asset Broker 2021",
+			"Best Multi-Asset Broker 2022"
+		],
+		"country_info": {
+			"countries_codes": [
+				"US"
+			],
+			"countries": [
+				"USA"
+			],
+			"about_ast": {
+				"type": "root",
+				"children": [
+					"TradeStation pursues a singular vision; to offer the ultimate online trading platform and services for self-directed traders and investors across the equities, equity/index options, futures, futures options and cryptocurrencies markets. TradeStation is already a recognized industry leader and is on a mission to build something even better. Equities and Futures accounts are offered by TradeStation Securities, Inc. Crypto accounts are offered by TradeStation Crypto, Inc.\r\n\r\n",
+					{
+						"type": "url",
+						"params": {
+							"url": "https://www.tradestation.com/important-information/?utm_source=tradingview&utm_medium=referral&utm_content=Broker%2BPage%2B-%2BImportant%2BDocuments/",
+							"linkText": "Important Documents",
+							"relFollow": false
+						}
+					}
+				]
+			}
+    }
+  }
+]
+
+```
+
+
+The response is a list of brokers with detailed information for each broker. Here are some key fields returned in the response:
+
+- `id`: The ID of the broker.
+- `flags`: Flags associated with the broker.
+- `flags_verbose`: Descriptive names for the flags.
+- `country_info`: Information about the country where the broker operates.
+- `slug_name`: The slug name of the broker.
+- `name`: The name of the broker.
+- `hidden`: Indicates if the broker is hidden.
+- `rating`: The rating of the broker.
+- `username`: The username associated with the broker.
+- `header_image`: URL of the header image for the broker.
+- `logo_square`: URL of the square logo for the broker.
+- `plan`: The plan ID of the broker.
+- `plan_verbose`: Verbose name for the plan.
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+## TradingView Symbols List API Documentation
+
+This documentation provides information on how to use the TradingView Symbols List API to retrieve a custom symbols list from TradingView. A symbols list contains a collection of symbols (e.g., stocks, cryptocurrencies, forex pairs) that can be used for analysis and tracking.
+
+### Request
+
+The request should be made using the following parameters:
+
+- **URL:** `https://www.tradingview.com/api/v1/symbols_list/custom/`
+- **Method:** POST
+
+#### Headers
+
+No specific headers are required for this request.
+
+#### Cookies
+
+The following cookie should be included in the request:
+
+```
+Cookie: sessionid=zn6h0b7vl3jk6m0ktqf5ox85aga2i57l; sessionid_sign=v1%3AFvYQ99BUyRHVIg9Tv6GcLWIrOnSNpN3wA0Nj%2BjZNdIQ%3D
+```
+
+### Response
+
+The API will respond with a JSON array containing the custom symbols list. Here's an example response:
 
 ```json
 [
@@ -761,32 +1117,76 @@ GET /api/v1/symbols_list/custom/
 ]
 ```
 
-**Response Breakdown:**
+The response contains a single object representing the custom symbols list. The fields within the object include:
 
+- `id`: The unique identifier of the symbols list.
+- `type`: The type of symbols list (e.g., custom).
+- `name`: The name of the symbols list.
+- `symbols`: An array of symbols included in the list.
+- `active`: Indicates whether the symbols list is active.
+- `shared`: Indicates whether the symbols list is shared.
+- `color`: The color associated with the symbols list.
+- `description`: A description of the symbols list.
+- `created`: The date and time when the symbols list was created.
+- `modified`: The date and time when the symbols list was last modified.
 
-- `id` (integer): The unique identifier of the watchlist.
+Please note that the symbols listed in the `symbols` array are represented in different formats, such as exchange-specific symbols (e.g., "BLACKBULL:SPX500") and general market symbols (e.g., "FX:GBPJPY").
 
-- `type` (string): The type of the watchlist.
+#### Python Example
 
-- `name` (string): The name of the watchlist.
+Here's an example Python code snippet to retrieve and process the custom symbols list:
 
-- `symbols` (array): An array of symbols in the watchlist.
+```python
+import requests
 
-- `active` (boolean): Indicates if the watchlist is active.
+url = "https://www.tradingview.com/api/v1/symbols_list/custom/"
+cookies = {
+    "Cookie": "sessionid=zn6h0b7vl3jk6m0ktqf5ox85aga2i57l; sessionid_sign=v1%3AFvYQ99BUyRHVIg9Tv6GcLWIrOnSNpN3wA0Nj%
 
-- `shared` (boolean): Indicates if the watchlist is shared.
+2BjZNdIQ%3D"
+}
 
-- `color` (null): The color associated with the watchlist.
+response = requests.post(url, cookies=cookies)
+data = response.json()
 
-- `description` (null): The description of the watchlist.
+# Extracting the symbols list
+symbols_list = data[0]
+symbols = symbols_list["symbols"]
 
-- `created` (string): The timestamp of when the watchlist was created.
+# Process the symbols as needed
+for symbol in symbols:
+    print(symbol)
+```
 
-- `modified` (string): The timestamp of when the watchlist was last modified.
+This code snippet uses the `requests` library to send a POST request to the TradingView Symbols List API with the provided cookies. The response is then parsed as JSON, and the symbols list and symbols are extracted and processed accordingly.
 
+Please note that the provided cookies may require authentication or specific session data to work correctly. Adjust them accordingly to your requirements.
 
-
+I hope this information helps! Let me know if you have any further questions.
 ---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ---
