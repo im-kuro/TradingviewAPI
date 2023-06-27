@@ -10,18 +10,17 @@ a pull request or dm me on discord
 - scanner enpoints are mainly for getting data about the market
 https://scanner.tradingview.com/
 ## Scanner Endpoints
-- POST /global/scan
-- POST /coin/scan
-- POST /america/scan
+- POST [/global/scan](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-1)
+- POST [/coin/scan](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-2)
+- POST [/america/scan](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-3)
 
 - api endpoints are mainly for getting data about the user or their settings itself
 https://www.tradingview.com/api/v1/
 ## API Endpoints
-- GET /study-templates
-- GET /symbols_list/custom/
-- GET /symbols_list/active
-- GET /symbols_list/colored
-- GET /brokers/trading_panel
+- GET [/study-templates](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-4)
+- GET [/symbols_list/custom](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-3)
+- GET [/symbols_list/colored](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-3)
+- GET [/brokers/trading_panel](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-3)
 
 
 - Misc endpoints are mainly for random things that i see no use for but are still there
@@ -29,10 +28,10 @@ https://news-headlines.tradingview.com/v2/
 https://pine-facade.tradingview.com/pine-facade/list
 https://www.tradingview.com/pubscripts-library/editors-picks
 ## Misc Endpoints
-- GET /headlines
-- GET /pine-facade/list
-- GET /pubscripts-library/editors-picks
-
+- GET [/headlines](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
+- GET [/pine-facade/list](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
+- GET [/pubscripts-library/editors-picks](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
+]
 
 
 
@@ -43,7 +42,7 @@ https://www.tradingview.com/pubscripts-library/editors-picks
 - Please note some requests do not need headers. in fact, im sure most public endpoints dont need headers so have fun with that.
 
 ---
-
+## Get global market data
 ### Request
 
 The request should be made using the following parameters:
@@ -219,7 +218,6 @@ print(f"Symbol: {symbol}")
 print(f"Data: {symbolValues}")
 ```
 
-This code sends a POST request to the API endpoint, retrieves the response, and extracts the relevant data from the JSON response.
 ---
 
 
@@ -245,7 +243,7 @@ This code sends a POST request to the API endpoint, retrieves the response, and 
 
 
 This documentation provides information on how to use the TradingView Coin Scanner API to retrieve cryptocurrency data. The API allows you to send a POST request to the endpoint `https://scanner.tradingview.com/coin/scan` in order to scan for specific coins and retrieve relevant information.
-
+## Get cryptocurrency data
 ### Request
 
 The request should be made using the following parameters:
@@ -482,7 +480,7 @@ This example uses the `requests` library to send the HTTP POST request to the AP
 ---
 
 This documentation provides information on how to use the TradingView Scanner API to perform a scan for stocks in the American market based on preset criteria.
-
+## Get emaerican stocks
 ### Request
 
 The request should be made using the following parameters:
@@ -610,7 +608,7 @@ This example shows three scan results, each represented by an object in the `dat
 
 ---
 This documentation provides information on how to use the TradingView News Headlines API to retrieve news headlines related to financial markets. The API allows you to send a GET request to the endpoint `https://news-headlines.tradingview.com/v2/headlines` with specific parameters to filter the news articles.
-
+## Get news headlines
 ### Request
 
 The request should be made using the following parameters:
@@ -766,7 +764,7 @@ This code sends a GET request to the API endpoint, retrieves the response, and e
 ---
 
 This documentation provides information on how to use the TradingView Study Templates API to retrieve a list of standard study templates available on TradingView. Study templates are pre-configured sets of technical indicators and settings that can be applied to charts for analysis.
-
+## study templates
 ### Request
 
 The request should be made using the following parameters:
@@ -883,8 +881,8 @@ Here's an example response:
 					{
 						"id": "Volume",
 						"description": "Volume"
-					},
-						...
+					}
+						
 				],
 				"interval": null
 			}
@@ -897,8 +895,8 @@ Here's an example response:
 					{
 						"id": "ZigZag@tv-basicstudies",
 						"description": "Zig Zag"
-					},
-						...
+					}
+						
 				],
 				"interval": null
 			}
@@ -927,11 +925,8 @@ Here's an example response:
 
 This documentation provides an overview of the TradingView Brokers API and explains the requests and responses involved in retrieving broker information. It also includes simple example Python code to parse the data returned by the API.
 
-### Get Brokers Trading Panel
-
-Retrieve information about brokers available on TradingView's trading panel.
-
-#### Request
+## Get Brokers Trading Panel
+### Request
 
 **Payload:**
 N/A (GET request does not include a payload.)
@@ -1063,10 +1058,9 @@ The response is a list of brokers with detailed information for each broker. Her
 
 ---
 
-## TradingView Symbols List API Documentation
 
 This documentation provides information on how to use the TradingView Symbols List API to retrieve a custom symbols list from TradingView. A symbols list contains a collection of symbols (e.g., stocks, cryptocurrencies, forex pairs) that can be used for analysis and tracking.
-
+## Get your custom symbols list 
 ### Request
 
 The request should be made using the following parameters:
@@ -1199,7 +1193,7 @@ I hope this information helps! Let me know if you have any further questions.
 ---
 
 This documentation provides information on how to retrieve a list of colored symbols using the TradingView API. The API endpoint allows you to retrieve information about colored symbols, including their IDs, names, colors, and associated symbols.
-
+## Get symbiol list colors
 ### Request
 
 To retrieve the colored symbols list, make a `GET` request to the following endpoint:
@@ -1279,9 +1273,7 @@ The API response will be a JSON array containing multiple colored symbols object
     "shared": false,
     "color": "green",
     "description": null,
-    "created": "2023-06-19T19:31:01.003480Z
-
-",
+    "created": "2023-06-19T19:31:01.003480Z",
     "modified": "2023-06-19T19:31:02.555269Z"
   },
   {
@@ -1418,16 +1410,15 @@ for colored_symbol in data:
 ## API Documentation
 
 This documentation provides information about the API endpoint for retrieving a list of scripts from TradingView's Pine Facade.
-
+## 
 ### Request
 
 The API endpoint for retrieving the list of scripts is:
 
-```
-GET /pine-facade/list?filter=standard
-```
-
-#### Request Headers
+- **URL:** `/pine-facade/list?filter=standard`
+- **Method:** GET
+## Get scripts??
+### Request Headers
 
 The following headers are required for making the request:
 
@@ -1547,7 +1538,6 @@ for script in data:
     print()
 ```
 
-Please note that you might need to install the `requests` library to run the example code. You can install it using `pip install requests`.
 ---
 
 
@@ -1580,12 +1570,11 @@ Please note that you might need to install the `requests` library to run the exa
 ---
 
 
-## API Documentation
-
+## Popular Scripts??
 ### Request
 
-- Method: GET
-- URL: https://www.tradingview.com/pubscripts-library/editors-picks
+- **URL**: `https://www.tradingview.com/pubscripts-library/editors-picks`
+- **Method**: GET
 
 #### Headers
 ```http
@@ -1691,16 +1680,6 @@ for result in data["results"]:
 ```
 
 This Python code sends a GET request to the specified URL with the provided headers. It then parses the JSON response and prints the script name, author, and agree count for each result in the response.
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -28,12 +28,7 @@ used for what i can only assume is google analytics and other things like that.
     - [News Endpoints](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#post---httpsscannertradingviewcomglobalscan)
 
 
-- [Private API Overview](#private-api-overview-apiv1)
-    - [Endpoints](#endpoints)
 
-
-
-## Public API Overview (80% done)
 
 #### **Scanner Endpoints:**
 
@@ -42,19 +37,14 @@ used for what i can only assume is google analytics and other things like that.
 - [POST /america/scan](https://github.com/im-kuro/TradingveiwAPI/tree/main#post-americascan)
 
 #### **API Endpoints:**
-
 - [GET /study-templates](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-study-templates)
 - [GET /symbols_list/custom/](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-symbols-listcustom)
-- [GET /symbols_list/active](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-symbols-listactive)
 - [GET /symbols_list/colored](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-symbols-listcolored)
+- [GET /brokers/trading_panel](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-3)
 
-#### **News Endpoints:**
-
+#### **Misc Endpoints:**
 - [GET /headlines](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-headlines)
-
-
-## Private API Overview (10% done)
-- [GET /unreads/get](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-unreadsget) - Retrieve the current unread notifications for your account.
-
+- [GET /pine-facade/list](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
+- [GET /pubscripts-library/editors-picks](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
 
 
