@@ -7,31 +7,31 @@ Please note the trading veiw api is very limited. This is just a list of all the
 a pull request or dm me on discord
 
 
-- scanner enpoints are mainly for getting data about the market
 https://scanner.tradingview.com/
 ## Scanner Endpoints
+scanner enpoints are mainly for getting data about the market
 - POST [/global/scan](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-global-market-data)
 - POST [/coin/scan](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-cryptocurrency-data)
 - POST [/america/scan](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-american-stocks)
 
-- api endpoints are mainly for getting data about the user or their settings itself
 https://www.tradingview.com/api/v1/
 ## API Endpoints
+api endpoints are mainly for getting data about the user or their settings itself
 - GET [/study-templates](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#study-templates)
-- GET [/symbols_list/custom]https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-your-custom-symbols-list)
+- GET [/symbols_list/custom](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-your-custom-symbols-list)
 - GET [/symbols_list/colored](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-symbiol-list-colors)
 - GET [/brokers/trading_panel](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-brokers-trading-panel)
 
 
-- Misc endpoints are mainly for random things that i see no use for but are still there
+
 https://news-headlines.tradingview.com/v2/
 https://pine-facade.tradingview.com/pine-facade/list
 https://www.tradingview.com/pubscripts-library/editors-picks
 ## Misc Endpoints
+Misc endpoints are mainly for random things that i see no use for but are still there
 - GET [/headlines](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-news-headlines)
 - GET [/pine-facade/list](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
 - GET [/pubscripts-library/editors-picks](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
-]
 
 
 
