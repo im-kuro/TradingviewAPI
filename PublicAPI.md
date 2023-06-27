@@ -10,17 +10,17 @@ a pull request or dm me on discord
 - scanner enpoints are mainly for getting data about the market
 https://scanner.tradingview.com/
 ## Scanner Endpoints
-- POST [/global/scan](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-1)
-- POST [/coin/scan](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-2)
-- POST [/america/scan](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-3)
+- POST [/global/scan](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-global-market-data)
+- POST [/coin/scan](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-cryptocurrency-data)
+- POST [/america/scan](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-american-stocks)
 
 - api endpoints are mainly for getting data about the user or their settings itself
 https://www.tradingview.com/api/v1/
 ## API Endpoints
-- GET [/study-templates](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-4)
-- GET [/symbols_list/custom](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-3)
-- GET [/symbols_list/colored](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-3)
-- GET [/brokers/trading_panel](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-3)
+- GET [/study-templates](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#study-templates)
+- GET [/symbols_list/custom]https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-your-custom-symbols-list)
+- GET [/symbols_list/colored](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-symbiol-list-colors)
+- GET [/brokers/trading_panel](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-brokers-trading-panel)
 
 
 - Misc endpoints are mainly for random things that i see no use for but are still there
@@ -28,7 +28,7 @@ https://news-headlines.tradingview.com/v2/
 https://pine-facade.tradingview.com/pine-facade/list
 https://www.tradingview.com/pubscripts-library/editors-picks
 ## Misc Endpoints
-- GET [/headlines](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
+- GET [/headlines](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-news-headlines)
 - GET [/pine-facade/list](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
 - GET [/pubscripts-library/editors-picks](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
 ]
@@ -480,7 +480,7 @@ This example uses the `requests` library to send the HTTP POST request to the AP
 ---
 
 This documentation provides information on how to use the TradingView Scanner API to perform a scan for stocks in the American market based on preset criteria.
-## Get emaerican stocks
+## Get american stocks
 ### Request
 
 The request should be made using the following parameters:
@@ -1407,17 +1407,14 @@ for colored_symbol in data:
 ---
 
 
-## API Documentation
-
-This documentation provides information about the API endpoint for retrieving a list of scripts from TradingView's Pine Facade.
-## 
+## Get scripts
 ### Request
 
 The API endpoint for retrieving the list of scripts is:
 
 - **URL:** `/pine-facade/list?filter=standard`
 - **Method:** GET
-## Get scripts??
+
 ### Request Headers
 
 The following headers are required for making the request:
@@ -1570,7 +1567,7 @@ for script in data:
 ---
 
 
-## Popular Scripts??
+## Popular Scripts
 ### Request
 
 - **URL**: `https://www.tradingview.com/pubscripts-library/editors-picks`
