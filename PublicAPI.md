@@ -3,23 +3,18 @@
 # Here are all the public endpoint with limited access to data and functionality.
 (most of this was written by chatGPT lmao so if you see a issue lmk)
 
+Please note the trading veiw api is very limited. This is just a list of all the endpoints i could find and wrote docs for. If you find more please make 
+a pull request or dm me on discord
 
+
+- scanner enpoints are mainly for getting data about the market
 https://scanner.tradingview.com/
 ## Scanner Endpoints
 - POST /global/scan
 - POST /coin/scan
 - POST /america/scan
 
-
-
-https://news-headlines.tradingview.com/v2/
-## News Endpoints
-- GET /headlines
--
--
-
-
-
+- api endpoints are mainly for getting data about the user or their settings itself
 https://www.tradingview.com/api/v1/
 ## API Endpoints
 - GET /study-templates
@@ -29,13 +24,23 @@ https://www.tradingview.com/api/v1/
 - GET /brokers/trading_panel
 
 
+- Misc endpoints are mainly for random things that i see no use for but are still there
+https://news-headlines.tradingview.com/v2/
+https://pine-facade.tradingview.com/pine-facade/list
+https://www.tradingview.com/pubscripts-library/editors-picks
+## Misc Endpoints
+- GET /headlines
+- GET /pine-facade/list
+- GET /pubscripts-library/editors-picks
+
+
 
 
 
 
 ## Endpoints documentation
 
-- Please note some requests do not need headers. in fact im sure most public endpoints dont need headers, so have fun with that.
+- Please note some requests do not need headers. in fact, im sure most public endpoints dont need headers so have fun with that.
 
 ---
 
@@ -48,9 +53,7 @@ The request should be made using the following parameters:
 
 #### Headers
 
-The following headers should be included in the request:
-
-```
+```http
 Accept: */*
 Accept-Encoding: gzip, deflate
 Accept-Language: en-US,en;q=0.9
@@ -254,7 +257,7 @@ The request should be made using the following parameters:
 
 The following headers should be included in the request:
 
-```
+```http
 Host: scanner.tradingview.com
 Content-Length: 224
 Sec-Ch-Ua: 
@@ -491,7 +494,7 @@ The request should be made using the following parameters:
 
 The following headers should be included in the request:
 
-```
+```http
 Accept: application/json
 Accept-Encoding: gzip, deflate
 Accept-Language: en-US,en;q=0.9
@@ -515,7 +518,7 @@ User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 The following cookie should be included in the request:
 
 ```
-Cookie: sessionid=zn6h0b7vl3jk6m0ktqf5ox85aga2i57l; sessionid_sign=v1%3AFvYQ99BUyRHVIg9Tv6GcLWIrOnSNpN3wA0Nj%2BjZNdIQ%3D
+Cookie: sessionid=; sessionid_sign=
 ```
 
 #### Request Body
@@ -619,7 +622,7 @@ The request should be made using the following parameters:
 
 The following headers should be included in the request:
 
-```
+```http
 Accept: */*
 Accept-Encoding: gzip, deflate
 Accept-Language: en-US,en;q=0.9
@@ -698,7 +701,7 @@ headers = {
     "Sec-Fetch-Mode": "cors",
     "Sec-Fetch-Site": "same-site",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.91 Safari/537.36",
-    "Cookie": "sessionid=zn6h0b7vl3jk6m0ktqf5ox85aga2i57l; sessionid_sign=v1%3AFvYQ99BUyRHVIg9Tv6GcLWIrOnSNpN3wA0Nj%2BjZNdIQ%3D"
+    "Cookie": "sessionid=; sessionid_sign="
 }
 
 response = requests.get(url, headers=headers)
@@ -775,7 +778,7 @@ The request should be made using the following parameters:
 
 The following headers should be included in the request:
 
-```
+```http
 Accept: */*
 Accept-Encoding: gzip, deflate
 Accept-Language: en-US,en;q=0.9
@@ -797,7 +800,7 @@ X-Requested-With: XMLHttpRequest
 The following cookie should be included in the request:
 
 ```
-Cookie: sessionid=zn6h0b7vl3jk6m0ktqf5ox85aga2i57l; sessionid_sign=v1%3AFvYQ99BUyRHVIg9Tv6GcLWIrOnSNpN3wA0Nj%2BjZNdIQ%3D
+Cookie: sessionid=; sessionid_sign=
 ```
 
 ### Response
@@ -958,7 +961,7 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.91 Safari/537.36',
     'X-Language': 'en',
     'X-Requested-With': 'XMLHttpRequest',
-    'cookie': 'sessionid=zn6h0b7vl3jk6m0ktqf5ox85aga2i57l; sessionid_sign=v1%3AFvYQ99BUyRHVIg9Tv6GcLWIrOnSNpN3wA0Nj%2BjZNdIQ%3D'
+    'cookie': 'sessionid=; sessionid_sign='
 }
 
 response = requests.get(url, headers=headers)
@@ -1073,14 +1076,28 @@ The request should be made using the following parameters:
 
 #### Headers
 
-No specific headers are required for this request.
+```http
+Host: www.tradingview.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+X-Language: en
+X-Requested-With: XMLHttpRequest
+Dnt: 1
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Te: trailers
+Cookie:
+```
 
 #### Cookies
 
 The following cookie should be included in the request:
 
 ```
-Cookie: sessionid=zn6h0b7vl3jk6m0ktqf5ox85aga2i57l; sessionid_sign=v1%3AFvYQ99BUyRHVIg9Tv6GcLWIrOnSNpN3wA0Nj%2BjZNdIQ%3D
+Cookie: sessionid=; sessionid_sign=
 ```
 
 ### Response
@@ -1141,9 +1158,7 @@ import requests
 
 url = "https://www.tradingview.com/api/v1/symbols_list/custom/"
 cookies = {
-    "Cookie": "sessionid=zn6h0b7vl3jk6m0ktqf5ox85aga2i57l; sessionid_sign=v1%3AFvYQ99BUyRHVIg9Tv6GcLWIrOnSNpN3wA0Nj%
-
-2BjZNdIQ%3D"
+    "Cookie": "sessionid=; sessionid_sign="
 }
 
 response = requests.post(url, cookies=cookies)
@@ -1181,204 +1196,512 @@ I hope this information helps! Let me know if you have any further questions.
 
 
 
-
-
-
-
-
-
-
-
 ---
 
-
-## GET /symbols_list/active (same as /symbols_list/custom/ but not in an array, more testing to be done)
-
-
-Retrieves the list of symbols for a custom watchlist.
+This documentation provides information on how to retrieve a list of colored symbols using the TradingView API. The API endpoint allows you to retrieve information about colored symbols, including their IDs, names, colors, and associated symbols.
 
 ### Request
 
-```bash
-GET /api/v1/symbols_list/active
+To retrieve the colored symbols list, make a `GET` request to the following endpoint:
+
 ```
+https://www.tradingview.com/api/v1/symbols_list/colored
+```
+
+Include the following headers in your request:
+
+```http
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Dnt: 1
+Host: www.tradingview.com
+Referer: https://www.tradingview.com/chart/lf4zb40L/?symbol=BLACKBULL%3ASPX500
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Te: trailers
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0
+X-Language: en
+X-Requested-With: XMLHttpRequest
+cookie: 
+```
+
 
 ### Response
 
-```json
-{
-	"id": 102259501,
-	"type": "custom",
-	"name": "Watchlist",
-	"symbols": [
-		"###MAINS",
-		"BLACKBULL:SPX500",
-		"FX:NAS100",
-		"FOREXCOM:XAUUSD",
-		"FX:GBPJPY",
-		"OANDA:EURJPY",
-		"FX:GBPUSD",
-		"OANDA:EURUSD",
-		"FX:USDJPY",
-		"CAPITALCOM:UK100",
-		"###INDICES",
-		"CURRENCYCOM:EU50"
-	],
-	"active": true,
-	"shared": false,
-	"color": null,
-	"description": null,
-	"created": "2023-01-30T13:30:42.256580Z",
-	"modified": "2023-05-26T13:29:00.902122Z"
-}
-```
+The API response will be a JSON array containing multiple colored symbols objects. Each object represents a colored symbol and contains the following properties:
 
-**Response Breakdown:**
+- `id` (integer): The ID of the colored symbol.
+- `type` (string): The type of the colored symbol, which is always "colored".
+- `name` (string): The name of the colored symbol.
+- `symbols` (array): An array of symbols associated with the colored symbol.
+- `shared` (boolean): Indicates whether the colored symbol is shared or not.
+- `color` (string): The color assigned to the colored symbol.
+- `description` (string): The description of the colored symbol (nullable).
+- `created` (string): The date and time when the colored symbol was created.
+- `modified` (string): The date and time when the colored symbol was last modified.
 
-- `id` (integer): The unique identifier of the watchlist.
-
-- `type` (string): The type of the watchlist.
-
-- `name` (string): The name of the watchlist.
-
-- `symbols` (array): An array of symbols in the watchlist.
-
-- `active` (boolean): Indicates if the watchlist is active.
-
-- `shared` (boolean): Indicates if the watchlist is shared.
-
-- `color` (null): The color associated with the watchlist.
-
-- `description` (null): The description of the watchlist.
-
-- `created` (string): The timestamp of when the watchlist was created.
-
-- `modified` (string): The timestamp of when the watchlist was last modified.
-
-
----
-
-
-
-
----
-
-
-## GET /symbols_list/colored
-
-For each symbol you have saved that has a colored marker, this endpoint will return the symbol and the color associated with it.
-(no real use for this endpoint tbh lol)
-
-### Request
-
-```bash
-GET /api/v1/symbols_list/colored
-```
-
-### Response
+#### Example Response
 
 ```json
-{
 [
-   {
-      "id":102392177,
-      "type":"colored",
-      "name":"",
-      "symbols":[
-         "BLACKBULL:SPX500"
-      ],
-      "shared":false,
-      "color":"red",
-      "description":null,
-      "created":"2023-01-31T15:58:06.743304Z",
-      "modified":"2023-06-19T19:31:02.555269Z"
-   },
-   {
-      "id":115246003,
-      "type":"colored",
-      "name":"",
-      "symbols":[
-         "OANDA:EURJPY"
-      ],
-      "shared":false,
-      "color":"green",
-      "description":null,
-      "created":"2023-06-19T19:31:01.003480Z",
-      "modified":"2023-06-19T19:31:02.555269Z"
-   },
-   {
-      "id":115246004,
-      "type":"colored",
-      "name":"",
-      "symbols":[
-         "FX:GBPJPY"
-      ],
-      "shared":false,
-      "color":"purple",
-      "description":null,
-      "created":"2023-06-19T19:31:02.554022Z",
-      "modified":"2023-06-19T19:31:02.555269Z"
-   },
-   {
-      "id":115246002,
-      "type":"colored",
-      "name":"",
-      "symbols":[
-         "FX:GBPUSD"
-      ],
-      "shared":false,
-      "color":"blue",
-      "description":null,
-      "created":"2023-06-19T19:30:59.786175Z",
-      "modified":"2023-06-19T19:31:02.555269Z"
-   }
-}
+  {
+    "id": 102392177,
+    "type": "colored",
+    "name": "",
+    "symbols": [
+      "BLACKBULL:SPX500"
+    ],
+    "shared": false,
+    "color": "red",
+    "description": null,
+    "created": "2023-01-31T15:58:06.743304Z",
+    "modified": "2023-06-19T19:31:02.555269Z"
+  },
+  {
+    "id": null,
+    "type": "colored",
+    "name": "",
+    "active": false,
+    "color": "orange",
+    "created": null,
+    "modified": null,
+    "symbols": []
+  },
+  {
+    "id": 115246003,
+    "type": "colored",
+    "name": "",
+    "symbols": [
+      "OANDA:EURJPY"
+    ],
+    "shared": false,
+    "color": "green",
+    "description": null,
+    "created": "2023-06-19T19:31:01.003480Z
+
+",
+    "modified": "2023-06-19T19:31:02.555269Z"
+  },
+  {
+    "id": 115246004,
+    "type": "colored",
+    "name": "",
+    "symbols": [
+      "FX:GBPJPY"
+    ],
+    "shared": false,
+    "color": "purple",
+    "description": null,
+    "created": "2023-06-19T19:31:02.554022Z",
+    "modified": "2023-06-19T19:31:02.555269Z"
+  },
+  {
+    "id": 115246002,
+    "type": "colored",
+    "name": "",
+    "symbols": [
+      "FX:GBPUSD"
+    ],
+    "shared": false,
+    "color": "blue",
+    "description": null,
+    "created": "2023-06-19T19:30:59.786175Z",
+    "modified": "2023-06-19T19:31:02.555269Z"
+  },
+  {
+    "id": null,
+    "type": "colored",
+    "name": "",
+    "active": false,
+    "color": "cyan",
+    "created": null,
+    "modified": null,
+    "symbols": []
+  },
+  {
+    "id": null,
+    "type": "colored",
+    "name": "",
+    "active": false,
+    "color": "pink",
+    "created": null,
+    "modified": null,
+    "symbols": []
+  }
+]
 ```
 
-**Response Breakdown:**
-- `id` (integer): The unique identifier of the watchlist.
+### Python Example
 
-- `type` (string): The type of the watchlist.
+Here's a simple example Python code snippet to parse the response and extract relevant information:
 
-- `name` (string): The name of the watchlist.
+```python
+import requests
 
-- `symbols` (array): An array of symbols with that color.
+url = "https://www.tradingview.com/api/v1/symbols_list/colored"
+headers = {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate",
+    "Accept-Language": "en-US,en;q=0.5",
+    "Dnt": "1",
+    "Host": "www.tradingview.com",
+    "Referer": "https://www.tradingview.com/chart/lf4zb40L/?symbol=BLACKBULL%3ASPX500",
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "same-origin",
+    "Te": "trailers",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0",
+    "X-Language": "en",
+    "X-Requested-With": "XMLHttpRequest",
+    "Cookie": "sessionid=; sessionid_sign="
+}
 
-- `shared` (boolean): Indicates if the watchlist is shared.
+response = requests.get(url, headers=headers)
+data = response.json()
 
-- `color` (string): The color associated with the watchlist.
+# Extract relevant information
+for colored_symbol in data:
+    id = colored_symbol.get("id")
+    type = colored_symbol.get("type")
+    name = colored_symbol.get("name")
+    symbols = colored_symbol.get("symbols")
+    shared = colored_symbol.get("shared")
+    color = colored_symbol.get("color")
+    description = colored_symbol.get("description")
+    created = colored_symbol.get("created")
+    modified = colored_symbol.get("modified")
 
-- `description` (string): The description of the watchlist.
+    # Do something with the extracted
 
-- `created` (string): The timestamp of when the watchlist was created.
+ information (e.g., print)
+    print(f"ID: {id}")
+    print(f"Type: {type}")
+    print(f"Name: {name}")
+    print(f"Symbols: {symbols}")
+    print(f"Shared: {shared}")
+    print(f"Color: {color}")
+    print(f"Description: {description}")
+    print(f"Created: {created}")
+    print(f"Modified: {modified}")
+    print("\n")
+```
 
-- `modified` (string): The timestamp of when the watchlist was last modified.
 
 ---
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 
 
-## 
+## API Documentation
 
-
+This documentation provides information about the API endpoint for retrieving a list of scripts from TradingView's Pine Facade.
 
 ### Request
 
-```bash
+The API endpoint for retrieving the list of scripts is:
 
+```
+GET /pine-facade/list?filter=standard
+```
+
+#### Request Headers
+
+The following headers are required for making the request:
+
+```http
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Dnt: 1
+Host: pine-facade.tradingview.com
+Origin: https://www.tradingview.com
+Referer: https://www.tradingview.com/
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+Te: trailers
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0
+Cookie: sessionid=; sessionid_sign=
 ```
 
 ### Response
 
-```json
+The API will respond with a JSON array containing information about the scripts. Here is an example response:
 
+```json
+[
+	{
+		"userId": 605017,
+		"scriptName": "24-hour Volume",
+		"scriptSource": "",
+		"scriptAccess": "open_no_auth",
+		"scriptIdPart": "STD;24h%Volume",
+		"version": "3.0",
+		"extra": {
+			"isAuto": false,
+			"isBeta": false,
+			"isBuiltIn": true,
+			"isNew": false,
+			"isPineEditorNewTemplate": true,
+			"isUpdated": false,
+			"kind": "study",
+			"shortDescription": "24H Vol",
+			"sourceInputsCount": 1,
+			"tags": []
+		}
+	},
+	{
+		"userId": 605017,
+		"scriptName": "Accumulation/Distribution",
+		"scriptSource": "",
+		"scriptAccess": "open_no_auth",
+		"scriptIdPart": "STD;Accumulation_Distribution",
+		"version": "27.0",
+		"extra": {
+			"isAuto": false,
+			"isBeta": false,
+			"isBuiltIn": true,
+			"isMTFResolution": true,
+			"isNew": false,
+			"isPineEditorNewTemplate": true,
+			"isUpdated": false,
+			"kind": "study",
+			"shortDescription": "Accum/Dist",
+			"sourceInputsCount": 0,
+			"tags": []
+		}
+	}
+]
 ```
 
-**Response Breakdown:**
-- `id` (integer): The unique identifier of the watchlist.
+Each object in the array represents a script and provides the following information:
+
+- `userId`: The ID of the user who created the script.
+- `scriptName`: The name of the script.
+- `scriptSource`: The source code of the script (empty in this case).
+- `scriptAccess`: The access level of the script (e.g., "open_no_auth").
+- `scriptIdPart`: The unique identifier for the script.
+- `version`: The version of the script.
+- `extra`: Additional details about the script, such as its type, description, and tags.
+
+###
+
+ Python Example
+
+Here's a simple example Python code that demonstrates how to parse the data from the API response:
+
+```python
+import requests
+import json
+
+url = 'https://pine-facade.tradingview.com/pine-facade/list?filter=standard'
+headers = {
+    'Accept': 'application/json, text/javascript, */*; q=0.01',
+    'Accept-Encoding': 'gzip, deflate',
+    'Accept-Language': 'en-US,en;q=0.5',
+    'Dnt': '1',
+    'Host': 'pine-facade.tradingview.com',
+    'Origin': 'https://www.tradingview.com',
+    'Referer': 'https://www.tradingview.com/',
+    'Sec-Fetch-Dest': 'empty',
+    'Sec-Fetch-Mode': 'cors',
+    'Sec-Fetch-Site': 'same-site',
+    'Te': 'trailers',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0',
+    'Cookie': 'sessionid=; sessionid_sign='
+}
+
+response = requests.get(url, headers=headers)
+data = response.json()
+
+for script in data:
+    print("Script Name:", script["scriptName"])
+    print("Script ID:", script["scriptIdPart"])
+    print("Version:", script["version"])
+    print("Access Level:", script["scriptAccess"])
+    print("Description:", script["extra"]["shortDescription"])
+    print("Tags:", script["extra"]["tags"])
+    print()
+```
+
+Please note that you might need to install the `requests` library to run the example code. You can install it using `pip install requests`.
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+
+## API Documentation
+
+### Request
+
+- Method: GET
+- URL: https://www.tradingview.com/pubscripts-library/editors-picks
+
+#### Headers
+```http
+Accept: */*
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Dnt: 1
+Host: www.tradingview.com
+Referer: https://www.tradingview.com/chart/lf4zb40L/
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Te: trailers
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0
+X-Language: en
+X-Requested-With: XMLHttpRequest
+Cookie: sessionid=; sessionid_sign=
+```
+### Response
+
+```json
+{
+	"next": "/pubscripts-library/editors-picks/?c=Im8iOiItcGlja2VkX3RpbWUiLCJ2IjpbIjIwMjMtMDQtMjZUMTM6MDk6MTAuNjcwMTk5Il0",
+	"results": [
+		{
+			"imageUrl": "0h0gKNcy",
+			"scriptName": "120x ticker screener (composite tickers)",
+			"scriptSource": "",
+			"access": 1,
+			"scriptIdPart": "PUB;005f1fe5ec46477c829e6bdb00543018",
+			"version": "1",
+			"extra": {
+				"kind": "study",
+				"sourceInputsCount": 0
+			},
+			"agreeCount": 142,
+			"editorsPick": true,
+			"author": {
+				"id": 1052332,
+				"username": "fikira",
+				"is_broker": false
+			}
+		},
+		{
+			"imageUrl": "xGnUhodO",
+			"scriptName": "Open Interest Chart [LuxAlgo]",
+			"scriptSource": "",
+			"access": 1,
+			"scriptIdPart": "PUB;1a3525503519483996e955001638d6ac",
+			"version": "1",
+			"extra": {
+				"kind": "study",
+				"sourceInputsCount": 0
+			},
+			"agreeCount": 765,
+			"editorsPick": true,
+			"author": {
+				"id": 1049752,
+				"username": "LuxAlgo",
+				"is_broker": false
+			}
+		}
+	]
+}
+```
+
+### Example Python Code
+
+Here's an example code snippet in Python to parse the response data:
+
+```python
+import requests
+import json
+
+url = "https://www.tradingview.com/pubscripts-library/editors-picks"
+headers = {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate",
+    "Accept-Language": "en-US,en;q=0.5",
+    "Dnt": "1",
+    "Host": "www.trading
+
+view.com",
+    "Referer": "https://www.tradingview.com/chart/lf4zb40L/",
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "same-origin",
+    "Te": "trailers",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0",
+    "X-Language": "en",
+    "X-Requested-With": "XMLHttpRequest",
+    "Cookie": "sessionid=; sessionid_sign="
+}
+
+response = requests.get(url, headers=headers)
+data = response.json()
+
+for result in data["results"]:
+    print("Script Name:", result["scriptName"])
+    print("Author:", result["author"]["username"])
+    print("Agree Count:", result["agreeCount"])
+    print("---------------------------")
+```
+
+This Python code sends a GET request to the specified URL with the provided headers. It then parses the JSON response and prints the script name, author, and agree count for each result in the response.
+
+
+
+
+
+
+
+
+
+
+
 
 
 ---
