@@ -32,6 +32,10 @@ Misc endpoints are mainly for random things that i see no use for but are still 
 - GET [/headlines](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-news-headlines)
 - GET [/pine-facade/list](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
 - GET [/pubscripts-library/editors-picks](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
+- GET [/quote_cache_http/snapshot](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#Get-symbol-data)
+- GET [/conversation-status]()
+- GET [/notifications-data]()
+- GET [/drawing-templates/LineToolHorzRay]()
 
 
 
@@ -1681,3 +1685,593 @@ This Python code sends a GET request to the specified URL with the provided head
 
 
 ---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Get symbol data
+
+This documentation provides an overview of the TradingView Quote API and explains how to retrieve quote data for multiple symbols using a POST request. The API allows you to fetch various details about financial instruments, including their current session, type, update mode, names, descriptions, prices, and more.
+
+### Request
+
+To retrieve quote data for multiple symbols, make a POST request to the following endpoint:
+
+```
+POST https://quotes.tradingview.com/quote_cache_http/snapshot?fields=current_session%2Ctype%2Cupdate_mode%2Coriginal_name%2Cshort_name%2Cpro_name%2Cdescription%2Clocal_description%2Clanguage%2Cfractional%2Cpricescale%2Cminmov%2Cminmove2%2Csymbol_status%2Clp%2Cchp%2Cch%2Clp_time%2Clogoid%2Ccurrency-logoid%2Cbase-currency-logoid%2Crtc%2Crch%2Crchp
+```
+
+Include the following headers in your request:
+
+```
+origin: https://www.tradingview.com
+cookie: sessionid=; sessionid_sign=
+```
+
+The `fields` parameter in the URL specifies the specific data fields you want to retrieve.
+
+In the request body, provide an array of symbols for which you want to fetch quote data. Here's an example request body:
+
+```json
+[
+  "BLACKBULL:SPX500",
+  "FOREXCOM:XAUUSD",
+  "FX:NAS100"
+]
+```
+
+### Response
+
+The API will respond with an array of objects, where each object represents the quote data for a symbol. Here's an example response:
+
+```json
+[
+  {
+    "symbol": "BLACKBULL:SPX500",
+    "s": "ok",
+    "data": {
+      "current_session": "out_of_session",
+      "type": "index",
+      "update_mode": "streaming",
+      "original_name": "BLACKBULL:SPX500",
+      "short_name": "SPX500",
+      "pro_name": "BLACKBULL:SPX500",
+      "description": "SPX500",
+      "local_description": null,
+      "language": null,
+      "fractional": false,
+      "pricescale": 100,
+      "minmov": 1,
+      "minmove2": 0,
+      "symbol_status": "realtime",
+      "lp": 4301.6999999999998181,
+      "chp": 0.19000000000000000222,
+      "ch": 8.0,
+      "lp_time": 1686344334,
+      "logoid": "indices/s-and-p-500",
+      "currency-logoid": null,
+      "base-currency-logoid": null
+    }
+  },
+  {
+    "symbol": "FOREXCOM:XAUUSD",
+    "s": "ok",
+    "data": {
+      "current_session": "out_of_session",
+      "type": "commodity",
+      "update_mode": "streaming",
+      "original_name": "FOREXCOM:XAUUSD",
+      "short_name": "XAUUSD",
+      "pro_name": "FOREXCOM:XAUUSD",
+      "description": "Gold / U.S.
+
+ Dollar",
+      "local_description": null,
+      "language": null,
+      "fractional": false,
+      "pricescale": 100,
+      "minmov": 1,
+      "minmove2": 1,
+      "symbol_status": "realtime",
+      "lp": 1961.2699999999999818,
+      "chp": -0.22000000000000000111,
+      "ch": -4.2699999999999995737,
+      "lp_time": 1686344378,
+      "logoid": "metal/gold",
+      "currency-logoid": null,
+      "base-currency-logoid": null
+    }
+  }
+]
+```
+
+For each symbol, the response includes the following details:
+
+- `symbol`: The symbol identifier.
+- `s`: Status of the response. In this example, it's set to "ok" indicating a successful response.
+- `data`: An object containing the quote data for the symbol.
+  - `current_session`: The current session of the symbol.
+  - `type`: The type of the symbol (e.g., index, commodity).
+  - `update_mode`: The update mode for the symbol's data.
+  - `original_name`: The original name of the symbol.
+  - `short_name`: A shortened version of the symbol's name.
+  - `pro_name`: The professional name of the symbol.
+  - `description`: A description of the symbol.
+  - `local_description`: The local description of the symbol (if available).
+  - `language`: The language of the symbol's data (if specified).
+  - `fractional`: Indicates whether the symbol supports fractional values.
+  - `pricescale`: The scale factor for prices.
+  - `minmov`: The minimum movement for the symbol.
+  - `minmove2`: The second minimum movement for the symbol.
+  - `symbol_status`: The status of the symbol (e.g., realtime).
+  - `lp`: The last price of the symbol.
+  - `chp`: The change percentage of the symbol.
+  - `ch`: The change value of the symbol.
+  - `lp_time`: The timestamp of the last price update.
+  - `logoid`: The identifier for the symbol's logo.
+  - `currency-logoid`: The identifier for the symbol's currency logo (if available).
+  - `base-currency-logoid`: The identifier for the base currency's logo (if available).
+
+### Example Python Code
+
+Here's an example Python code snippet to parse the response and extract the relevant information:
+
+```python
+import requests
+import json
+
+url = 'https://quotes.tradingview.com/quote_cache_http/snapshot?fields=current_session%2Ctype%2Cupdate_mode%2Coriginal_name%2Cshort_name%2Cpro_name%2Cdescription%2Clocal_description%2Clanguage%2Cfractional%2Cpricescale%2Cminmov%2Cminmove2%2Csymbol_status%2Clp%2Cchp%2Cch%2Clp_time%2Clogoid%2Ccurrency-logoid%2Cbase-currency-logoid%2Crtc%2Crch%2Crchp'
+headers = {
+    'origin': 'https://www.tradingview.com',
+    'cookie': 'sessionid=zn6h0b7vl3jk6m0ktqf5ox85aga2i57l; sessionid_sign=v1%3AFvYQ99BUyRHVIg9Tv6GcLWIrOnSNpN3wA0Nj%2BjZNdIQ%
+
+3D'
+}
+symbols = ["BLACKBULL:SPX500", "FOREXCOM:XAUUSD", "FX:NAS100"]
+data = json.dumps(symbols)
+
+response = requests.post(url, headers=headers, data=data)
+response_data = response.json()
+
+for quote in response_data:
+    symbol = quote['symbol']
+    data = quote['data']
+    # Extract and use the required information from the 'data' object
+    # For example:
+    current_session = data['current_session']
+    symbol_type = data['type']
+    update_mode = data['update_mode']
+    # ... and so on
+
+    # Perform further processing or output the extracted data as needed
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Get conversations
+
+Endpoint: `https://www.tradingview.com/conversation-status`
+
+Method: GET
+
+Headers:
+```
+Host: www.tradingview.com
+Sec-Ch-Ua: 
+Accept: */*
+X-Language: en
+X-Requested-With: XMLHttpRequest
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.91 Safari/537.36
+Sec-Ch-Ua-Platform: ""
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://www.tradingview.com/chart/?symbol=SPX
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+Cookie: cookiePrivacyPreferenceBannerProduction=notApplicable; cookiesSettings={"analytics":true,"advertising":true}; _gid=GA1.2.1046925617.1686023754; _sp_ses.cf1a=*; _ga=GA1.2.1116477781.1686022716; _gat_gtag_UA_24278967_1=1; _ga_YVVRYGL0E0=GS1.1.1686069076.2.1.1686071161.45.0.0; _sp_id.cf1a=01cd3c5e-82a2-4585-aca3-85196c82d85e.1686022716.2.1686071161.1686024878.40aed288-6693-47c5-94c2-9943ae540418
+```
+
+Parameters:
+```
+_rand: 0.4846194512399544
+offset: 0
+room_id: general
+stat_interval: D
+stat_symbol: SPX
+is_private
+```
+
+# Response
+
+The response will be a JSON object with the following structure:
+
+```json
+{
+	"messages": [
+		{
+			"id": "43036ed4-9041-4f96-80a4-5f5f8946f49a",
+			"user_id": 14960951,
+			"user_pic": "https://s3.tradingview.com/userpics/14960951-HpJH_mid.png",
+			"username": "Honestcowboy",
+			"badges": [
+				{
+					"name": "pro:pro_premium",
+					"verbose_name": "Premium"
+				}
+			],
+			"is_moderator": false,
+			"text": "Mmm can't share as it can be interpreted as solicitation",
+			"type": "",
+			"meta": {
+				"text": "",
+				"interval": "1",
+				"links": {},
+				"version": "0.2"
+			},
+			"room_id": "general",
+			"symbol": "BINANCE:BTCUSDT",
+			"interval": "1",
+			"time": "Sun Jun 11 20:32:49 2023 UTC"
+		},
+		{
+			"id": "ef8578a0-982a-46e9-9e54-7b8aee87b4d9",
+			"user_id": 14960951,
+			"user_pic": "https://s3.tradingview.com/userpics/14960951-HpJH_mid.png",
+			"username": "Honestcowboy",
+			
+
+	"badges": [
+				{
+					"name": "pro:pro_premium",
+					"verbose_name": "Premium"
+				}
+			],
+			"is_moderator": false,
+			"text": "Let me go read house rules before I post a link to my track record",
+			"type": "",
+			"meta": {
+				"text": "",
+				"interval": "1",
+				"links": {},
+				"version": "0.2"
+			},
+			"room_id": "general",
+			"symbol": "BINANCE:BTCUSDT",
+			"interval": "1",
+			"time": "Sun Jun 11 20:31:38 2023 UTC"
+		}
+	]
+}
+```
+
+Example Python code to parse the data:
+```python
+import requests
+import json
+
+url = "https://www.tradingview.com/conversation-status"
+headers = {
+    "Host": "www.tradingview.com",
+    "Sec-Ch-Ua": "",
+    "Accept": "*/*",
+    "X-Language": "en",
+    "X-Requested-With": "XMLHttpRequest",
+    "Sec-Ch-Ua-Mobile": "?0",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.91 Safari/537.36",
+    "Sec-Ch-Ua-Platform": "",
+    "Sec-Fetch-Site": "same-origin",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Dest": "empty",
+    "Referer": "https://www.tradingview.com/chart/?symbol=SPX",
+    "Accept-Encoding": "gzip, deflate",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Cookie": "cookiePrivacyPreferenceBannerProduction=notApplicable; cookiesSettings={\"analytics\":true,\"advertising\":true}; _gid=GA1.2.1046925617.1686023754; _sp_ses.cf1a=*; _ga=GA1.2.1116477781.1686022716; _gat_gtag_UA_24278967_1=1; _ga_YVVRYGL0E0=GS1.1.1686069076.2.1.1686071161.45.0.0; _sp_id.cf1a=01cd3c5e-82a2-4585-aca3-85196c82d85e.1686022716.2.1686071161.1686024878.40aed288-6693-47c5-94c2-9943ae540418"
+}
+
+params = {
+    "_rand": "0.4846194512399544",
+    "offset": "0",
+    "room_id": "general",
+    "stat_interval": "D",
+    "stat_symbol": "SPX",
+    "is_private": ""
+}
+
+response = requests.get(url, headers=headers, params=params)
+data = json.loads(response.text)
+
+# Accessing the messages
+messages = data["messages"]
+for message in messages:
+    message_id = message["id"]
+    user_id = message["user_id"]
+    user_pic = message["user_pic"]
+    username = message["username"]
+    badges = message["badges"]
+    is_moderator = message["is_moderator"]
+    text = message["text"]
+    room_id = message["room_id"]
+    symbol = message["symbol"]
+    interval = message["interval"]
+   
+
+ time = message["time"]
+    # Process the message as needed
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Get notifications and settings
+
+To retrieve user notifications and settings, you can make a GET request to the following URL:
+
+```
+https://www.tradingview.com/notifications-data?widget_type=user
+```
+
+### Request Headers
+
+Include the following headers in your request:
+
+```
+Host: www.tradingview.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://www.tradingview.com/chart/lf4zb40L/?symbol=BLACKBULL%3ASPX500
+X-Language: en
+X-Requested-With: XMLHttpRequest
+Dnt: 1
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Te: trailers
+Cookie: <your_cookie_here>
+```
+
+Make sure to replace `<your_cookie_here>` with the appropriate cookie value.
+
+### Response
+
+Upon successful request, you will receive a JSON response containing the user's notifications and settings.
+
+```json
+{
+	"notifications": [],
+	"settings": {
+		"notification_follow_user": 3,
+		"notification_comment": 3,
+		"notification_comment_pine": null,
+		"notification_vote": 3,
+		"notification_vote_pine": null,
+		"notification_mention_in_ideas_comment": 3,
+		"notification_mention_in_script_comment": null,
+		"notification_mention_in_chat": 3,
+		"notification_access_to_script": 1,
+		"notification_stream_start": 3,
+		"notification_broker_review": null,
+		"notification_broker_review_update": null,
+		"notification_broker_reply": null,
+		"notification_sound": true,
+		"notification_popup": true
+	}
+}
+```
+
+The response will contain an empty array for the "notifications" field if there are no notifications. The "settings" field will provide information about various notification preferences and settings.
+
+### Example Python Code
+
+Here's an example Python code snippet that demonstrates how to parse the JSON response:
+
+```python
+import requests
+import json
+
+url = "https://www.tradingview.com/notifications-data?widget_type=user"
+headers = {
+    "Host": "www.tradingview.com",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0",
+    "Accept": "*/*",
+    "Accept-Language": "en-US,en;q=0.5",
+    "Accept-Encoding": "gzip, deflate",
+    "Referer": "https://www.tradingview.com/chart/lf4zb40L/?symbol=BLACKBULL%3ASPX500",
+    "X-Language": "en",
+    "X-Requested-With": "XMLHttpRequest",
+    "Dnt": "1",
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "same-origin",
+    "Te": "trailers",
+    "Cookie": "<your_cookie_here>"
+}
+
+response = requests.get(url, headers=headers)
+data = response.json()
+
+# Parsing the response
+notifications = data["notifications"]
+settings = data["settings"]
+
+# Process the notifications and settings as needed
+# ...
+
+# Print the settings for example purposes
+print(json.dumps(settings, indent=4))
+```
+
+Remember to replace `<your_cookie_here>`
+
+with the appropriate cookie value in the `headers` dictionary before running the code.
+
+This example code demonstrates how to send the request, retrieve the JSON response, and extract the "settings" field from the response for further processing. You can customize the code based on your specific requirements.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## get drawing templates names
+
+URL: `https://www.tradingview.com/drawing-templates/LineToolHorzRay`
+TYPE: `GET`
+
+This endpoint retrieves the names of the saved templates for a specific drawing tool in TradingView. The `LineToolHorzRay` parameter represents the name of the drawing/tool for which you want to retrieve the saved templates.
+
+#### Request Headers:
+```
+Host: www.tradingview.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://www.tradingview.com/chart/lf4zb40L/
+X-Language: en
+X-Requested-With: XMLHttpRequest
+Dnt: 1
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Te: trailers
+```
+
+#### Response:
+
+The response is a JSON array containing the names of the saved templates for the specified drawing/tool. Here is an example response:
+
+```json
+[
+    "1H Liq.",
+    "Break Of Structure ",
+    "CHoCH",
+    "line",
+    "Liquidity",
+    "Previous Resistance",
+    "Previous Supply",
+    "Take profit 1",
+    "Take profit 2",
+    "Take profit 3"
+]
+```
+
+#### Python Example:
+
+You can use the following Python code to make a request to the TradingView API and parse the response:
+
+```python
+import requests
+
+url = 'https://www.tradingview.com/drawing-templates/LineToolHorzRay'
+
+headers = {
+    'Host': 'www.tradingview.com',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0',
+    'Accept': '*/*',
+    'Accept-Language': 'en-US,en;q=0.5',
+    'Accept-Encoding': 'gzip, deflate',
+    'Referer': 'https://www.tradingview.com/chart/lf4zb40L/',
+    'X-Language': 'en',
+    'X-Requested-With': 'XMLHttpRequest',
+    'Dnt': '1',
+    'Sec-Fetch-Dest': 'empty',
+    'Sec-Fetch-Mode': 'cors',
+    'Sec-Fetch-Site': 'same-origin',
+    'Te': 'trailers'
+}
+
+response = requests.get(url, headers=headers)
+data = response.json()
+
+# Print the names of the saved templates
+for template_name in data:
+    print(template_name)
+```
+
+Remember to replace `'LineToolHorzRay'` in the URL with the actual name of the drawing/tool for which you want to retrieve the saved templates.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
