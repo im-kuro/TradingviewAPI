@@ -12,11 +12,10 @@ https://scanner.tradingview.com/
 scanner enpoints are mainly for getting data about the market
 - POST [/global/scan](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-global-market-data)
 - POST [/coin/scan](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-cryptocurrency-data)
-- POST [/america/scan](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-american-stocks)
 
 https://www.tradingview.com/api/v1/
 ## API Endpoints
-api endpoints are mainly for getting data about the user or their settings itself
+api endpoints mainly for getting data about the user or their settings itself
 - GET [/study-templates](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#study-templates)
 - GET [/symbols_list/custom](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-your-custom-symbols-list)
 - GET [/symbols_list/colored](https://github.com/im-kuro/TradingviewAPI/blob/main/PublicAPI.md#get-symbiol-list-colors)
@@ -33,9 +32,9 @@ Misc endpoints are mainly for random things that i see no use for but are still 
 - GET [/pine-facade/list](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
 - GET [/pubscripts-library/editors-picks](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
 - GET [/quote_cache_http/snapshot](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#Get-symbol-data)
-- GET [/conversation-status]()
-- GET [/notifications-data]()
-- GET [/drawing-templates/LineToolHorzRay]()
+- GET [/conversation-status](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#Get-conversations)
+- GET [/notifications-data](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#Get-notifications-and-settings)
+- GET [/drawing-templates/LineToolHorzRay](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#get-drawing-templates-names)
 
 
 
@@ -481,107 +480,6 @@ This example uses the `requests` library to send the HTTP POST request to the AP
 
 
 
----
-
-This documentation provides information on how to use the TradingView Scanner API to perform a scan for stocks in the American market based on preset criteria.
-## Get american stocks
-### Request
-
-The request should be made using the following parameters:
-
-- **URL:** `https://scanner.tradingview.com/america/scan`
-- **Method:** POST
-
-#### Headers
-
-The following headers should be included in the request:
-
-```http
-Accept: application/json
-Accept-Encoding: gzip, deflate
-Accept-Language: en-US,en;q=0.9
-Connection: close
-Content-Length: 151
-Content-Type: text/plain;charset=UTF-8
-Host: scanner.tradingview.com
-Origin: https://www.tradingview.com
-Referer: https://www.tradingview.com/
-Sec-Ch-Ua:
-Sec-Ch-Ua-Mobile: ?0
-Sec-Ch-Ua-Platform: ""
-Sec-Fetch-Dest: empty
-Sec-Fetch-Mode: cors
-Sec-Fetch-Site: same-site
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.110 Safari/537.36
-```
-
-#### Cookies
-
-The following cookie should be included in the request:
-
-```
-Cookie: sessionid=; sessionid_sign=
-```
-
-#### Request Body
-
-The request body should be a JSON object with the following fields:
-
-- `columns`: An array of column names to include in the response. In the example, the columns are `["description", "logoid", "type"]`.
-- `ignore_unknown_fields`: A boolean value indicating whether to ignore unknown fields. In the example, it's set to `false`.
-- `options`: An object containing additional options. In the example, the `lang` option is set to `"en"`.
-- `range`: An array specifying the range of results to retrieve. In the example, it's set to `[0, 9]`.
-- `markets`: An array specifying the markets to scan. In the example, only the American market is specified.
-- `preset`: A string specifying the preset criteria for the scan. In the example, the preset is set to `"losers"`.
-
-### Response
-
-The API will respond with a JSON object containing the scan results. The response includes the following fields:
-
-- `totalCount`: The total count of results matching the scan criteria.
-- `data`: An array of objects representing the scan results. Each object has the following fields:
-  - `s`: The symbol of the stock.
-  - `d`: An array containing data related to the stock, such as its description, logoid, and type.
-
-Here's an example response:
-
-```json
-{
-	"totalCount": 2566,
-	"data": [
-		{
-			"s": "NASDAQ:BAOS",
-			"d": [
-				"Baosheng Media Group Holdings Limited",
-				"baosheng-media-limited",
-				"stock"
-			]
-		},
-		{
-			"s": "NYSE:PL",
-			"d": [
-				"Planet Labs PBC",
-				"planet-labs",
-				"stock"
-			]
-		},
-		{
-			"s": "NASDAQ:PEPG",
-			"d": [
-				"PepGen Inc.",
-
-
-				"",
-				"stock"
-			]
-		}
-	]
-}
-```
-
-This example shows three scan results, each represented by an object in the `data` array. Each object contains the symbol (`s`) and data (`d`) related to the stock.
-
----
 
 
 
@@ -1171,11 +1069,6 @@ for symbol in symbols:
     print(symbol)
 ```
 
-This code snippet uses the `requests` library to send a POST request to the TradingView Symbols List API with the provided cookies. The response is then parsed as JSON, and the symbols list and symbols are extracted and processed accordingly.
-
-Please note that the provided cookies may require authentication or specific session data to work correctly. Adjust them accordingly to your requirements.
-
-I hope this information helps! Let me know if you have any further questions.
 ---
 
 
@@ -1704,7 +1597,7 @@ This Python code sends a GET request to the specified URL with the provided head
 
 
 
-
+---
 
 
 ## Get symbol data
@@ -1864,6 +1757,7 @@ for quote in response_data:
     # Perform further processing or output the extracted data as needed
 ```
 
+---
 
 
 
@@ -1883,8 +1777,7 @@ for quote in response_data:
 
 
 
-
-
+---
 
 ## Get conversations
 
@@ -2038,6 +1931,7 @@ for message in messages:
  time = message["time"]
     # Process the message as needed
 ```
+---
 
 
 
@@ -2058,8 +1952,7 @@ for message in messages:
 
 
 
-
-
+---
 
 ## Get notifications and settings
 
@@ -2161,11 +2054,7 @@ settings = data["settings"]
 print(json.dumps(settings, indent=4))
 ```
 
-Remember to replace `<your_cookie_here>`
-
-with the appropriate cookie value in the `headers` dictionary before running the code.
-
-This example code demonstrates how to send the request, retrieve the JSON response, and extract the "settings" field from the response for further processing. You can customize the code based on your specific requirements.
+---
 
 
 
@@ -2178,9 +2067,7 @@ This example code demonstrates how to send the request, retrieve the JSON respon
 
 
 
-
-
-
+---
 
 
 ## get drawing templates names
@@ -2263,7 +2150,7 @@ Remember to replace `'LineToolHorzRay'` in the URL with the actual name of the d
 
 
 
-
+---
 
 
 

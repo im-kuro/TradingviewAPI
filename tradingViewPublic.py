@@ -16,27 +16,39 @@ class tradingVeiwPublic():
 		
 		self.sesh = sessions.Session()
 		self.sesh.headers.update({
-			"Host": "scanner.tradingview.com",
-			"Cookie": "cookiePrivacyPreferenceBannerProduction=notApplicable; cookiesSettings={'analytics':true,'advertising':true}; _gid=GA1.2.704054866.1686337824; _sp_ses.cf1a=*; _gat_gtag_UA_24278967_1=1; _sp_id.cf1a=01cd3c5e-82a2-4585-aca3-85196c82d85e.1686022716.4.1686417372.1686337824.fad9316a-f9ea-4a0c-86da-59daaa7f08b3; _ga=GA1.1.1116477781.1686022716; _ga_YVVRYGL0E0=GS1.1.1686417069.4.1.1686417372.45.0.0",
-			"Content-Length": "240",
-			"Sec-Ch-Ua": "",
-			"Sec-Ch-Ua-Platform": "",
-			"Sec-Ch-Ua-Mobile": "?0",
-			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.110 Safari/537.36",
-			"Content-Type": "text/plain;charset=UTF-8",
+			
+			"Host": "www.tradingview.com",
+			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0",
 			"Accept": "*/*",
-			"Origin": "https://www.tradingview.com",
-			"Sec-Fetch-Site": "same-site",
-			"Sec-Fetch-Mode": "cors",
-			"Sec-Fetch-Dest": "empty",
-			"Referer": "https://www.tradingview.com/",
+			"Accept-Language": "en-US,en;q=0.5",
 			"Accept-Encoding": "gzip, deflate",
-			"Accept-Language": "en-US,en;q=0.9"
+			"Referer": "https://www.tradingview.com/chart/lf4zb40L/?symbol=BLACKBULL%3ASPX500",
+			"X-Language": "en",
+			"X-Requested-With": "XMLHttpRequest",
+			"Dnt": "1",
+			"Sec-Fetch-Dest": "empty",
+			"Sec-Fetch-Mode": "cors",
+			"Sec-Fetch-Site": "same-origin",
+			"Te": "trailers"
 		})
 		if cookie != None:
-			self.sesh.cookies.update({f"""    
-           "cookie": "sessionid={cookie["sessionid"]}; sessionid_sign={cookie["sessionid_sign"]};"
-        """})
+			print(cookie)
+			self.sesh.headers.update({
+			"cookie": f"sessionid={cookie['sessionid']}; sessionid_sign={cookie['sessionid_sign']};",
+			"Host": "www.tradingview.com",
+			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0",
+			"Accept": "*/*",
+			"Accept-Language": "en-US,en;q=0.5",
+			"Accept-Encoding": "gzip, deflate",
+			"Referer": "https://www.tradingview.com/chart/lf4zb40L/?symbol=BLACKBULL%3ASPX500",
+			"X-Language": "en",
+			"X-Requested-With": "XMLHttpRequest",
+			"Dnt": "1",
+			"Sec-Fetch-Dest": "empty",
+			"Sec-Fetch-Mode": "cors",
+			"Sec-Fetch-Site": "same-origin",
+			"Te": "trailers"
+		})
 		self.request = self.sesh.request
     
     
@@ -46,7 +58,7 @@ class tradingVeiwPublic():
     
     
 	""" https://scanner.tradingview.com/ """
-	def getGlobalData(self, ticker: str = None) -> json:
+	def getGlobalData(self, ticker: str = None) -> json: # working
 		data = {
 			"columns":[
 				"price_52_week_high",
@@ -74,8 +86,9 @@ class tradingVeiwPublic():
 				]
 				}
 			}
-			
+		self.sesh.headers.clear()
 		req = self.sesh.post("https://scanner.tradingview.com/global/scan", data=json.dumps(data))
+	
 		reqJson = req.json()
 		if req.status_code == 200:
 			pharsedData = {
@@ -97,14 +110,15 @@ class tradingVeiwPublic():
 
 			return pharsedData
 		else:
-			return {"error": reqJson["error"], "status": req.status_code}
-
+			if reqJson["detail"]: return {"detail": reqJson["detail"], "status": req.status_code, "response": req.text}
+			elif reqJson["error"]: return {"error": reqJson["error"], "status": req.status_code, "response": req.text}
+			else: return {"error": "unknown error", "status": req.status_code, "response": req.text}
 
 
 
 
 	
-	def getCoinData(self, market: str, preset: str) -> json:
+	def getCoinData(self, market: str, preset: str) -> json: # working
 		data = {
 				"columns":[
 					"base_currency_desc",
@@ -114,7 +128,6 @@ class tradingVeiwPublic():
 					"exchange",
 					"typespecs"
 				],
-				"ignore_unknown_fields":"true",
 				"options":{
 					"lang":"en"
 				},
@@ -128,7 +141,7 @@ class tradingVeiwPublic():
 				"preset":preset
 				}
 			
-			
+		self.sesh.headers.clear()
 		req = self.sesh.post("https://scanner.tradingview.com/coin/scan", data=json.dumps(data))
 		reqJson = req.json()
 		if req.status_code == 200:
@@ -140,78 +153,110 @@ class tradingVeiwPublic():
 
 			return pharsedData
 		else:
-			return {"error": reqJson["error"], "status": req.status_code}
+			if reqJson["detail"]: return {"detail": reqJson["detail"], "status": req.status_code, "response": req.text}
+			elif reqJson["error"]: return {"error": reqJson["error"], "status": req.status_code, "response": req.text}
+			else: return {"error": "unknown error", "status": req.status_code, "response": req.text}
 
 
 
-
-
-	def getStockData(self, market: str, preset: str) -> json:
-		data = {
-				"columns":[
-					"description",
-					"logoid",
-					"type"
-				],
-				"ignore_unknown_fields":"true",
-				"options":{
-					"lang":"en"
-				},
-				"range":[
-					0,
-					999
-				],
-				"markets":[
-					market
-				],
-				"preset":preset
-				}
-			
-			
-		req = self.sesh.post("https://scanner.tradingview.com/coin/scan", data=json.dumps(data))
-		reqJson = req.json()
-		if req.status_code == 200:
-			pharsedData = {
-				"baseCurrencyDesc": req.json()["data"][0]["d"][0],
-				"baseCurrencyLogoid": req.json()["data"][0]["d"][1],
-				"type": req.json()["data"][0]["d"][2],
-				"marketCapCalc": req.json()["data"][0]["d"][3],
-				"exchange": req.json()["data"][0]["d"][4],
-				"typespecs": req.json()["data"][0]["d"][5]
-				
-			}
-
-			return pharsedData
-		else:
-			return {"error": reqJson["error"], "status": req.status_code}
-			
+   
 	"""https://www.tradingview.com/api/v1/"""
  
-	def getStudyTemplates(self):
-			
-		req = self.sesh.post("https://scanner.tradingview.com/coin/scan")
+
+	def getCustomSymbolList(self, symboID: str = None) -> json: # working
+		req = self.sesh.get(f"https://www.tradingview.com/api/v1/symbols_list/custom/{symboID}")
+
 		reqJson = req.json()
 		if req.status_code == 200:
-
 			return reqJson
 		else:
-			return {"error": reqJson["error"], "status": req.status_code}
+			if reqJson["detail"]: return {"detail": reqJson["detail"], "status": req.status_code, "response": req.text}
+			elif reqJson["error"]: return {"error": reqJson["error"], "status": req.status_code, "response": req.text}
+			else: return {"error": "unknown error", "status": req.status_code, "response": req.text}
+   
+   
+	def getActiveSymbols(self) -> json: # working
+		req = self.sesh.get(f"https://www.tradingview.com/api/v1/symbols_list/active")
+		reqJson = req.json()
+		if req.status_code == 200:
+			return reqJson
+		if reqJson["detail"]: return {"detail": reqJson["detail"], "status": req.status_code, "response": req.text}
+		elif reqJson["error"]: return {"error": reqJson["error"], "status": req.status_code, "response": req.text}
+		else: return {"error": "unknown error", "status": req.status_code, "response": req.text}
 
-	def getCustomSymbolList(self):
-		pass
 
-	def getCustomSymbolListColored(self):
-		pass
+	def getCustomSymbolListColored(self) -> json: # working
+		
+		req = self.sesh.get(f"https://www.tradingview.com/api/v1/symbols_list/colored")
 
-	def getBrokerPanelNews(self):
-		pass
+		reqJson = req.json()
+		if req.status_code == 200:
+			return reqJson
+		else:
+			return {"error": reqJson["error"], "status": req.status_code, "response": req.text}
 
+
+
+	def getBrokerPanelNews(self) -> json: #
+		self.sesh.headers.clear()
+		req = self.sesh.get(f"https://www.tradingview.com/api/v1/brokers/trading_panel")
+
+		reqJson = req.json()
+		if req.status_code == 200:
+			return reqJson
+		else:
+			if reqJson["detail"]: return {"detail": reqJson["detail"], "status": req.status_code, "response": req.text}
+			elif reqJson["error"]: return {"error": reqJson["error"], "status": req.status_code, "response": req.text}
+			else: return {"error": "unknown error", "status": req.status_code, "response": req.text}
 	"""
 https://news-headlines.tradingview.com/v2/
 https://pine-facade.tradingview.com/pine-facade/list
 https://www.tradingview.com/pubscripts-library/editors-picks
 
 	"""
-	def getNews(self):
-		pass
+	def getNews(self, category: str = None, lang: str = "en") -> json: # working
+		self.sesh.headers.clear()
+		self.sesh.params = {
+			"category": category,
+			"client": "overview",
+			"lang": lang
+		}
+		req = self.sesh.get(f"https://news-headlines.tradingview.com/v2/headlines")
 
+		reqJson = req.json()
+		if req.status_code == 200:
+			return reqJson
+		else:
+			if reqJson["detail"]: return {"detail": reqJson["detail"], "status": req.status_code, "response": req.text}
+			elif reqJson["error"]: return {"error": reqJson["error"], "status": req.status_code, "response": req.text}
+			else: return {"error": "unknown error", "status": req.status_code, "response": req.text}
+
+
+	def getIndicators(self, filter: str = "standard") -> json: # working
+		self.sesh.headers.clear()
+		self.sesh.params = {
+			"filter": filter
+		}
+		req = self.sesh.get(f"https://pine-facade.tradingview.com/pine-facade/list")
+
+		reqJson = req.json()
+		if req.status_code == 200:
+			return reqJson
+		else:
+			if reqJson["detail"]: return {"detail": reqJson["detail"], "status": req.status_code, "response": req.text}
+			elif reqJson["error"]: return {"error": reqJson["error"], "status": req.status_code, "response": req.text}
+			else: return {"error": "unknown error", "status": req.status_code, "response": req.text}
+
+
+	def getPopularIndicators(self) -> json:
+		self.sesh.headers.clear()
+
+		req = self.sesh.get(f"https://www.tradingview.com/pubscripts-library/editors-picks")
+
+		reqJson = req.json()
+		if req.status_code == 200:
+			return reqJson
+		else:
+			if reqJson["detail"]: return {"detail": reqJson["detail"], "status": req.status_code, "response": req.text}
+			elif reqJson["error"]: return {"error": reqJson["error"], "status": req.status_code, "response": req.text}
+			else: return {"error": "unknown error", "status": req.status_code, "response": req.text}

@@ -22,29 +22,10 @@ used for what i can only assume is google analytics and other things like that.
 
 ## Table of Contents
 
-- [Public API Overview](#public-api-overview-apiv1)
-    - [Scanner Endpoints](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#post---httpsscannertradingviewcomglobalscan)
-    - [API Endpoints](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#post---httpsscannertradingviewcomglobalscan)
-    - [News Endpoints](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#post---httpsscannertradingviewcomglobalscan)
+- [Public API Overview](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md)
+    - [Scanner Endpoints](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#Scanner-Endpoints)
+    - [API Endpoints](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#API-Endpoints)
+    - [News Endpoints](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#Misc-Endpoints)
 
-
-
-
-#### **Scanner Endpoints:**
-
-- [POST /global/scan](https://github.com/im-kuro/TradingveiwAPI/tree/main#post-globalscan)
-- [POST /coin/scan](https://github.com/im-kuro/TradingveiwAPI/tree/main#post-coinscan)
-- [POST /america/scan](https://github.com/im-kuro/TradingveiwAPI/tree/main#post-americascan)
-
-#### **API Endpoints:**
-- [GET /study-templates](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-study-templates)
-- [GET /symbols_list/custom/](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-symbols-listcustom)
-- [GET /symbols_list/colored](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-symbols-listcolored)
-- [GET /brokers/trading_panel](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#request-3)
-
-#### **Misc Endpoints:**
-- [GET /headlines](https://github.com/im-kuro/TradingveiwAPI/tree/main#get-headlines)
-- [GET /pine-facade/list](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
-- [GET /pubscripts-library/editors-picks](https://github.com/im-kuro/TradingveiwAPI/blob/main/PublicAPI.md#)
 
 
